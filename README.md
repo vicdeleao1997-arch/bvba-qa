@@ -90,6 +90,16 @@ o upload; **aviso** so informa.
 
 ## Subindo
 
+Duas formas.
+
+**Pelo GitHub, sem token na sua maquina** (aba *Actions* > *Subir drop
+(rascunho)* > *Run workflow*). O token fica so nos secrets do repositorio,
+ninguem precisa colar credencial em lugar nenhum. Deixe `simular` marcado na
+primeira vez para ver o plano; desmarque para subir de verdade. Ao final o
+workflow comita o `.estado_drop.json`, que e o que a publicacao das 20h usa.
+
+**Ou pelo terminal:**
+
 ```bash
 python -m agente_drop plano          # mostra o que faria, sem escrever
 python -m agente_drop subir --aplicar
@@ -139,8 +149,8 @@ Configure uma vez, em *Settings > Secrets and variables > Actions*:
 | Secret   | `NUVEMSHOP_USER_AGENT` | `BVBA Drop Agent (contato@bvba.com.br)` |
 | Variable | `DROP_DATA` | a data do drop, `AAAA-MM-DD` |
 
-Comite o `.estado_drop.json` depois de subir — e por ele que o workflow sabe
-quais produtos publicar.
+O `.estado_drop.json` precisa estar comitado — e por ele que o workflow sabe
+quais produtos publicar. O workflow *Subir drop* ja faz esse commit sozinho.
 
 O agendamento tem duas protecoes que importam num lancamento:
 
