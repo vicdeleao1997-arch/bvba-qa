@@ -1,0 +1,17 @@
+# Credenciais — nunca comitar
+.env
+
+# Relatorios gerados a cada execucao
+relatorios/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+
+# Nao ignoramos de proposito:
+#   .estado_drop.json  -> precisa estar versionado para a publicacao agendada
+#                         das 20h saber quais produtos publicar (so IDs, nada secreto)
+#   imagens/           -> as fotos do drop ficam no repo junto do catalogo
