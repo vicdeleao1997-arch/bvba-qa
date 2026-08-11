@@ -20,6 +20,7 @@
 | [`05-calendario-8-semanas.md`](05-calendario-8-semanas.md) | Cronograma dia a dia, com responsáveis e gatilhos |
 | [`06-medicao-e-checklist.md`](06-medicao-e-checklist.md) | Setup de Pixel/CAPI, KPIs, checklist bloqueante de lançamento |
 | [`07-fontes-e-proveniencia.md`](07-fontes-e-proveniencia.md) | **Leia antes de agir nos números.** Classifica cada dado por origem — oficial, terceiro ou estimativa minha |
+| [`08-contexto-consolidado.md`](08-contexto-consolidado.md) | ⚠️ **COMECE POR AQUI.** Traz a campanha real em curso, os preços reais e o volume real de pedidos. Tem precedência sobre os demais onde houver conflito |
 
 ---
 
