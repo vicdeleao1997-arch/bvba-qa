@@ -1,7 +1,16 @@
 # BVBA Supply® — contexto de trabalho
 
 Repositório de planejamento de marketing da **BVBA Supply®**, marca brasileira de streetwear.
-Não é código: é documentação operacional. O material está em [`plano-360/`](plano-360/).
+Não é código: é documentação operacional.
+
+> ## 📍 O plano atual é [`PLANO.md`](PLANO.md)
+>
+> **A mídia paga está pausada por decisão do Victor e permanece pausada.** O plano v2 não tem
+> linha de orçamento de anúncio: cresce ativando os ~700 contatos mornos que a marca já tem
+> (218 no grupo VIP, ~500 na base, 6.290 no Instagram) antes de comprar tráfego novo.
+>
+> Os documentos em [`plano-360/`](plano-360/) são material de apoio. A copy, os scripts de
+> WhatsApp e o checklist de medição seguem válidos; **a arquitetura de mídia paga não**.
 
 ---
 
