@@ -1,0 +1,461 @@
+<title>BVBA Supply® — Plano de Marketing 360 · AW26</title>
+<style>
+  :root{
+    --ground:#f2efeb; --surface:#ffffff; --surface-2:#e9e5df; --line:#d3cec5;
+    --ink:#1a1e25; --ink-2:#4a5058; --muted:#767d86;
+    --accent:#7a5c38; --chip:#c1a37f; --chip-ink:#14171d;
+    --ok:#4d7a49; --warn:#9a7418; --crit:#a8452f;
+    --rail:#a09585;
+    --display:"Helvetica Neue",Helvetica,Arial,ui-sans-serif,system-ui,sans-serif;
+    --body:ui-sans-serif,system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+    --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --ground:#14171d; --surface:#1e222b; --surface-2:#252a34; --line:#333944;
+      --ink:#e8e4dd; --ink-2:#b6bac1; --muted:#8f959f;
+      --accent:#c1a37f; --chip:#c1a37f; --chip-ink:#14171d;
+      --ok:#6f9e6a; --warn:#d4a03c; --crit:#c85f4e;
+      --rail:#5c6470;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#14171d; --surface:#1e222b; --surface-2:#252a34; --line:#333944;
+    --ink:#e8e4dd; --ink-2:#b6bac1; --muted:#8f959f;
+    --accent:#c1a37f; --chip:#c1a37f; --chip-ink:#14171d;
+    --ok:#6f9e6a; --warn:#d4a03c; --crit:#c85f4e;
+    --rail:#5c6470;
+  }
+  code{font-family:var(--mono);font-size:.88em;background:var(--surface-2);padding:1px 5px;color:var(--ink)}
+
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; background:var(--ground); color:var(--ink);
+    font-family:var(--body); font-size:17px; line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1040px;margin:0 auto;padding:0 28px 96px}
+
+  /* ---------- spec-sheet header ---------- */
+  .sheet-head{border-bottom:2px solid var(--ink);padding:44px 0 18px;margin-bottom:0}
+  .brandline{
+    display:flex;justify-content:space-between;align-items:baseline;
+    gap:20px;flex-wrap:wrap;
+    font-family:var(--mono);font-size:11px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--muted);
+  }
+  .brandline b{color:var(--ink);font-weight:600}
+  h1{
+    font-family:var(--display);font-weight:700;
+    font-size:clamp(2.1rem,6.2vw,3.9rem);line-height:.98;
+    letter-spacing:-.035em;text-transform:uppercase;
+    text-wrap:balance;margin:22px 0 10px;
+  }
+  .subtitle{
+    font-size:clamp(1rem,2.2vw,1.2rem);color:var(--ink-2);
+    max-width:56ch;margin:0 0 26px;line-height:1.45;
+  }
+  /* spec grid, like the ficha técnica header block */
+  .spec-grid{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));
+    gap:1px;background:var(--line);border:1px solid var(--line);margin-bottom:8px;
+  }
+  .spec-cell{background:var(--ground);padding:11px 13px}
+  .spec-cell dt{
+    font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--muted);margin:0 0 3px;
+  }
+  .spec-cell dd{
+    margin:0;font-family:var(--mono);font-size:14px;
+    color:var(--ink);font-variant-numeric:tabular-nums;
+  }
+
+  /* ---------- section w/ left rail ---------- */
+  section{
+    display:grid;grid-template-columns:112px 1fr;gap:34px;
+    padding:52px 0;border-bottom:1px solid var(--line);
+  }
+  .rail{position:relative}
+  .rail .ref{
+    font-family:var(--mono);font-size:11px;letter-spacing:.1em;
+    color:var(--accent);font-weight:600;display:block;margin-bottom:6px;
+  }
+  .rail .lbl{
+    font-family:var(--mono);font-size:10px;letter-spacing:.13em;
+    text-transform:uppercase;color:var(--muted);line-height:1.5;display:block;
+  }
+  h2{
+    font-family:var(--display);font-weight:700;
+    font-size:clamp(1.4rem,3.4vw,2rem);line-height:1.08;
+    letter-spacing:-.024em;text-transform:uppercase;
+    margin:0 0 16px;text-wrap:balance;
+  }
+  h3{
+    font-family:var(--display);font-weight:700;font-size:1.02rem;
+    letter-spacing:.005em;margin:30px 0 9px;text-wrap:balance;
+  }
+  p{margin:0 0 15px;max-width:65ch}
+  .body-col > p:last-child{margin-bottom:0}
+  strong{font-weight:650;color:var(--ink)}
+  a{color:var(--accent);text-decoration:underline;text-underline-offset:2px;text-decoration-thickness:1px}
+  a:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:1px}
+
+  /* ---------- stat row ---------- */
+  .stats{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(136px,1fr));
+    gap:1px;background:var(--line);border:1px solid var(--line);margin:22px 0;
+  }
+  .stat{background:var(--surface);padding:15px 15px 13px}
+  .stat .k{
+    font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--muted);margin-bottom:6px;line-height:1.4;
+  }
+  .stat .v{
+    font-family:var(--display);font-size:1.65rem;font-weight:700;
+    letter-spacing:-.02em;line-height:1;font-variant-numeric:tabular-nums;
+  }
+  .stat .n{font-family:var(--mono);font-size:10.5px;color:var(--muted);margin-top:5px;line-height:1.4}
+  .v.crit{color:var(--crit)} .v.ok{color:var(--ok)} .v.warn{color:var(--warn)}
+
+  /* ---------- callout ---------- */
+  .callout{
+    background:var(--surface);border-left:3px solid var(--accent);
+    padding:16px 20px;margin:22px 0;
+  }
+  .callout p{margin:0;max-width:60ch}
+  .callout.crit{border-left-color:var(--crit)}
+
+  /* ---------- decision cards ---------- */
+  .decisions{display:flex;flex-direction:column;gap:1px;background:var(--line);border:1px solid var(--line);margin:22px 0}
+  .dec{background:var(--surface);padding:18px 20px;display:grid;grid-template-columns:36px 1fr;gap:16px;align-items:start}
+  .dec .num{
+    font-family:var(--mono);font-size:12px;font-weight:600;color:var(--accent);
+    border:1px solid var(--accent);width:28px;height:28px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .dec h3{margin:2px 0 6px;font-size:.98rem}
+  .dec p{margin:0;font-size:15.5px;color:var(--ink-2);max-width:62ch}
+
+  /* ---------- tables ---------- */
+  .tw{overflow-x:auto;margin:22px 0;border:1px solid var(--line)}
+  table{border-collapse:collapse;width:100%;min-width:440px;font-size:14.5px}
+  th,td{padding:9px 13px;text-align:left;border-bottom:1px solid var(--line)}
+  thead th{
+    background:var(--surface-2);font-family:var(--mono);font-size:9.5px;
+    letter-spacing:.13em;text-transform:uppercase;color:var(--muted);font-weight:600;
+  }
+  tbody tr:last-child td{border-bottom:none}
+  tbody tr:nth-child(even){background:var(--surface)}
+  td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+
+  /* ---------- AOV comparison bars ---------- */
+  .compare{display:flex;flex-direction:column;gap:14px;margin:24px 0}
+  .cmp-row{display:grid;grid-template-columns:76px 1fr;gap:14px;align-items:center}
+  .cmp-lbl{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:right}
+  .bar-track{position:relative;height:38px;background:var(--surface);border:1px solid var(--line)}
+  .bar-fill{position:absolute;inset:0 auto 0 0;display:flex;align-items:center;padding-left:12px}
+  .bar-fill.now{width:52%;background:var(--surface-2)}
+  .bar-fill.goal{width:85%;background:var(--chip)}
+  .bar-val{font-family:var(--display);font-weight:700;font-size:1.15rem;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+  .bar-fill.goal .bar-val{color:var(--chip-ink)}
+  .bar-note{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-family:var(--mono);font-size:11px;color:var(--muted)}
+
+  /* ---------- timeline ---------- */
+  .timeline{display:grid;grid-template-columns:repeat(9,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin:24px 0;overflow-x:auto}
+  .tl{background:var(--surface);padding:12px 8px;min-width:74px}
+  .tl .w{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:7px}
+  .tl .spend{font-family:var(--mono);font-size:12px;font-weight:600;margin-bottom:8px;font-variant-numeric:tabular-nums}
+  .tl.free .spend{color:var(--ok)}
+  .tl.paid .spend{color:var(--accent)}
+  .tl .what{font-size:11.5px;line-height:1.4;color:var(--ink-2)}
+  .tl.paid{background:var(--surface-2)}
+
+  /* ---------- checklist ---------- */
+  .checks{display:flex;flex-direction:column;gap:1px;background:var(--line);border:1px solid var(--line);margin:22px 0}
+  .chk{background:var(--surface);padding:12px 16px;display:grid;grid-template-columns:18px 1fr;gap:13px;align-items:start;font-size:15px}
+  .box{width:14px;height:14px;border:1.5px solid var(--rail);margin-top:4px}
+  .chk.block .box{border-color:var(--crit)}
+  .chk.block{background:var(--surface-2)}
+  .tag{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--crit);border:1px solid var(--crit);padding:1px 5px;margin-left:7px;white-space:nowrap;display:inline-block;vertical-align:1px}
+
+  ul.plain{margin:0 0 15px;padding-left:19px;max-width:64ch}
+  ul.plain li{margin-bottom:7px}
+  ul.plain li::marker{color:var(--accent)}
+
+  footer{padding:40px 0 0;font-family:var(--mono);font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);line-height:1.9}
+
+  @media (max-width:720px){
+    body{font-size:16px}
+    .wrap{padding:0 18px 64px}
+    section{grid-template-columns:1fr;gap:14px;padding:38px 0}
+    .rail{display:flex;gap:12px;align-items:baseline}
+    .rail .ref{margin-bottom:0}
+    .timeline{grid-template-columns:repeat(9,minmax(74px,1fr))}
+    .cmp-row{grid-template-columns:60px 1fr}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div class="wrap">
+
+  <header class="sheet-head">
+    <div class="brandline">
+      <span><b>BVBA SUPPLY®</b> — Supplying good trips!</span>
+      <span>REF: MKT-360 / AW26</span>
+    </div>
+    <h1>Plano de Marketing 360</h1>
+    <p class="subtitle">Sair de 2–3 pedidos por mês liquidando o arquivo pelo canal próprio, antes de gastar o próximo real em anúncio.</p>
+    <dl class="spec-grid">
+      <div class="spec-cell"><dt>Em curso</dt><dd>Luzes do Irreal · 2</dd></div>
+      <div class="spec-cell"><dt>A seguir</dt><dd>AW 2026 · Drop 2</dd></div>
+      <div class="spec-cell"><dt>Teto de mídia</dt><dd>R$30 / dia</dd></div>
+      <div class="spec-cell"><dt>Ciclo</dt><dd>8 semanas · pós 14.08</dd></div>
+      <div class="spec-cell"><dt>Revisão</dt><dd>11.08.2026</dd></div>
+    </dl>
+  </header>
+
+  <!-- 01 DIAGNÓSTICO -->
+  <section>
+    <div class="rail"><span class="ref">01</span><span class="lbl">Diagnóstico</span></div>
+    <div class="body-col">
+      <h2>A conta de anúncios não está com desempenho fraco. Está consumindo caixa.</h2>
+      <p>A conta de Meta Ads gasta de forma consistente — cerca de <strong>R$1.100/mês</strong>, com teto de R$30/dia. O problema não é a campanha: é o volume que existe do outro lado. O plano de lançamento de 02/08 registra que 8 pedidos seriam <em>"mais que o trimestre inteiro"</em>, o que situa a loja em <strong>2 a 3 pedidos por mês</strong>.</p>
+
+      <div class="stats">
+        <div class="stat"><div class="k">Gasto mensal</div><div class="v">R$900+</div><div class="n">teto de R$30/dia</div></div>
+        <div class="stat"><div class="k">Pedidos por mês</div><div class="v crit">~2–3</div><div class="n">8 superam o trimestre</div></div>
+        <div class="stat"><div class="k">ROAS real</div><div class="v crit">~0,4</div><div class="n">breakeven é 1,75</div></div>
+        <div class="stat"><div class="k">Resultado da mídia</div><div class="v crit">−R$700</div><div class="n">por mês</div></div>
+      </div>
+
+      <p>Com ticket real de <strong>R$132</strong> e margem de ~55%, cada pedido devolve ~R$73 de lucro bruto. Dois a três pedidos por mês somam R$300–400 de receita contra R$900 de mídia. Não é ROAS baixo — é <strong>prejuízo direto de cerca de R$700 por mês</strong>, ou ~R$2.000 no último trimestre.</p>
+
+      <div class="callout crit">
+        <p><strong>R$900/mês em anúncio que devolve R$350 não é investimento em aprendizado — é a produção do próximo drop indo embora.</strong> Otimizar segmentação ou criativo antes de consertar isso é rearrumar cadeiras.</p>
+      </div>
+
+      <h3>O que existe e não está sendo usado</h3>
+      <div class="tw">
+        <table>
+          <thead><tr><th>Ativo</th><th>Estado</th><th>Valor não capturado</th></tr></thead>
+          <tbody>
+            <tr><td>Base de 500+ clientes</td><td>Parada desde 04/2024</td><td>Custo de contato R$0</td></tr>
+            <tr><td>@bvbasupply · 6.290 seguidores</td><td>Ativo</td><td>Sem oferta apontada</td></tr>
+            <tr><td>Shooting AW26 (25/07)</td><td>Em edição</td><td>Criativo pronto e parado</td></tr>
+            <tr><td>Arquivo 2021–2023</td><td>Parado</td><td>Capital imobilizado</td></tr>
+            <tr><td>Parceria Arka Shop</td><td>Lançamento iminente</td><td>Canal sem custo de mídia</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 ESTRATÉGIA -->
+  <section>
+    <div class="rail"><span class="ref">02</span><span class="lbl">Estratégia</span></div>
+    <div class="body-col">
+      <h2>Três decisões que definem o plano</h2>
+      <div class="decisions">
+        <div class="dec">
+          <div class="num">1</div>
+          <div>
+            <h3>O arquivo não recebe orçamento de mídia. Vira alavanca de ticket.</h3>
+            <p>Peça encalhada é peça que o mercado já recusou a preço cheio — pagar mídia para vendê-la é comprar a mesma audiência duas vezes com um produto que já falhou. Em vez disso: <strong>acima de R$249, o cliente escolhe uma peça do arquivo de graça.</strong> O ticket sobe, o arquivo sai a custo zero, e a percepção é de presente, não de queima.</p>
+          </div>
+        </div>
+        <div class="dec">
+          <div class="num">2</div>
+          <div>
+            <h3>Uma campanha, um conjunto, cinco criativos.</h3>
+            <p>A tentação é dividir R$30/dia em prospecção, retargeting e teste. É o pior movimento possível — R$10/dia gera meia conversão por semana e nenhum dos três sai do aprendizado. <strong>O retargeting da BVBA é feito de graça</strong>, por Stories, WhatsApp e e-mail.</p>
+          </div>
+        </div>
+        <div class="dec">
+          <div class="num">3</div>
+          <div>
+            <h3>Mídia paga é o último canal a ligar, não o primeiro.</h3>
+            <p>Anúncio amplifica demanda — não a cria. As semanas 1 a 3 rodam com a base de 500 clientes e o Instagram, a custo zero. Quando o paid liga na semana 4, o <strong>Pixel já tem compras reais</strong> — em vez de gastar duas semanas e ~R$400 descobrindo quem é o comprador.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 OFERTA -->
+  <section>
+    <div class="rail"><span class="ref">03</span><span class="lbl">Oferta<br>&amp; margem</span></div>
+    <div class="body-col">
+      <h2>O ticket médio é o número-mestre</h2>
+      <p>Subir o ticket de R$132 para R$219 <strong>eleva o teto de CAC em 66%</strong>. E essa meta não é minha: <strong>é o preço de combo que a própria marca já pratica.</strong> A alavanca já existe — falta torná-la o caminho padrão, e não o brinde de quem chega primeiro.</p>
+
+      <div class="compare">
+        <div class="cmp-row">
+          <div class="cmp-lbl">Hoje</div>
+          <div class="bar-track"><div class="bar-fill now"><span class="bar-val">R$132</span></div><span class="bar-note">teto de CAC R$73</span></div>
+        </div>
+        <div class="cmp-row">
+          <div class="cmp-lbl">Meta</div>
+          <div class="bar-track"><div class="bar-fill goal"><span class="bar-val">R$219</span></div><span class="bar-note">teto de CAC R$121</span></div>
+        </div>
+      </div>
+
+      <h3>Os preços reais da marca</h3>
+      <p>Camiseta e boné custam o mesmo — R$129,90. O combo de duas peças já é o degrau que resolve o ticket.</p>
+      <div class="tw">
+        <table>
+          <thead><tr><th>Carrinho</th><th>Cheio</th><th>Com VIP20</th></tr></thead>
+          <tbody>
+            <tr><td>1 peça</td><td class="num">R$129,90</td><td class="num">R$103,92</td></tr>
+            <tr><td><strong>2 peças</strong></td><td class="num"><strong>R$219</strong></td><td class="num">R$175,20</td></tr>
+            <tr><td>3 peças</td><td class="num">R$299</td><td class="num">R$239,20</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout">
+        <p><strong>A troca que mais rende, e custa zero:</strong> hoje o brinde é distribuído por <em>posição na fila</em> — os três primeiros pedidos ganham camiseta, do 4º ao 10º ganham boné. Trocar o critério para <em>tamanho do carrinho</em> (brinde a partir de 2 peças) mantém a mesma generosidade, elimina a disputa de status entre quem comprou com minutos de diferença, e puxa o ticket de R$132 para R$219 — porque o cliente controla se ganha ou não.</p>
+      </div>
+
+      <h3>Por que não simplesmente dar 40% off</h3>
+      <div class="tw">
+        <table>
+          <thead><tr><th></th><th>Desconto de 40%</th><th>Arquivo Aberto</th></tr></thead>
+          <tbody>
+            <tr><td>Ticket médio</td><td>Cai para ~R$100</td><td><strong>Sobe para ~R$260</strong></td></tr>
+            <tr><td>Margem no item novo</td><td>60% → 33%</td><td><strong>60% mantida</strong></td></tr>
+            <tr><td>Percepção</td><td>"A marca está desovando"</td><td>"Ganhei um presente"</td></tr>
+            <tr><td>Preço de referência</td><td>Destruído</td><td><strong>Protegido</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout">
+        <p><strong>Regra:</strong> desconto de 10% ou 20% é desperdício puro — só corta margem de quem já ia comprar. Ou o item é bônus (100% off como add-on), ou é 50%+ dentro de um evento fechado. Nada entre os dois.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 EXECUÇÃO -->
+  <section>
+    <div class="rail"><span class="ref">04</span><span class="lbl">Execução<br>8 semanas</span></div>
+    <div class="body-col">
+      <h2>Canal próprio primeiro. Pago quando houver o que amplificar.</h2>
+      <p>Há uma campanha em curso — <strong>Luzes do Irreal · Etapa Dois</strong>, janela VIP de 10 a 13/08 e abertura pública em 14/08. O plano não interfere nela: começa depois, com os números dessa campanha na mão.</p>
+
+      <div class="timeline">
+        <div class="tl paid"><div class="w">até 13.08</div><div class="spend">em curso</div><div class="what">Janela VIP · não mexer</div></div>
+        <div class="tl paid"><div class="w">14.08</div><div class="spend">em curso</div><div class="what">Abertura pública</div></div>
+        <div class="tl free"><div class="w">15–17.08</div><div class="spend">R$0</div><div class="what">Fechar os dados reais</div></div>
+        <div class="tl free"><div class="w">S1</div><div class="spend">R$0</div><div class="what">Arquivo p/ quem não comprou</div></div>
+        <div class="tl free"><div class="w">S2</div><div class="spend">R$0</div><div class="what">Reativar os 500 da base</div></div>
+        <div class="tl free"><div class="w">S3</div><div class="spend">R$0</div><div class="what">Conteúdo + grupo</div></div>
+        <div class="tl free"><div class="w">S4–5</div><div class="spend">R$0</div><div class="what">Preparar o AW26</div></div>
+        <div class="tl free"><div class="w">S6–7</div><div class="spend">R$0</div><div class="what">Drop AW26 no orgânico</div></div>
+        <div class="tl free"><div class="w">S8</div><div class="spend">decisão</div><div class="what">Religar mídia?</div></div>
+      </div>
+
+      <div class="stats">
+        <div class="stat"><div class="k">Grupo VIP</div><div class="v">218</div><div class="n">contatos quentes · custo R$0</div></div>
+        <div class="stat"><div class="k">Base de clientes</div><div class="v">500+</div><div class="n">parada desde abr/2024</div></div>
+        <div class="stat"><div class="k">Pedidos-alvo</div><div class="v ok">25–45</div><div class="n">no ciclo de 8 semanas</div></div>
+        <div class="stat"><div class="k">Receita projetada</div><div class="v ok">R$5,5–10k</div><div class="n">a ticket de R$219</div></div>
+      </div>
+
+      <div class="callout">
+        <p><strong>Com 2–3 pedidos/mês, mídia paga não pode ser o motor.</strong> Um grupo de 218 contatos quentes e uma base de 500 clientes, ambos a custo zero, têm mais potencial do que R$900/mês de anúncio nesse volume. O pago volta a fazer sentido quando houver o que amplificar.</p>
+      </div>
+
+      <h3>A decisão que a aritmética favorece</h3>
+      <p>Pausar a mídia paga por 60 dias e redirecionar os R$900/mês para duas coisas: <strong>repor o estoque de brindes</strong> — hoje são 9 bonés para uma escada que promete brinde do 4º ao 10º pedido — e <strong>produzir conteúdo</strong> para o grupo e o orgânico. Religar quando a loja passar de ~15 pedidos/mês por canal próprio; aí o Pixel terá sinal real e cada real de mídia terá em cima o que multiplicar.</p>
+    </div>
+  </section>
+
+  <!-- 05 CRIATIVO -->
+  <section>
+    <div class="rail"><span class="ref">05</span><span class="lbl">Criativo</span></div>
+    <div class="body-col">
+      <h2>A peça-herói já é um anúncio</h2>
+      <p>A <strong>CJW-002</strong> é uma calça oversized wide que vira jorts por um zíper divisório no joelho. Isso não é uma peça de roupa — é um vídeo de oito segundos que se explica sozinho, com uma transformação visual no meio. Deve ser o primeiro criativo produzido.</p>
+
+      <div class="tw">
+        <table>
+          <thead><tr><th>Ângulo</th><th>Formato</th><th>Função</th></tr></thead>
+          <tbody>
+            <tr><td><strong>01 · Demonstração</strong></td><td>Reels 15s</td><td>A calça virando jorts — maior potencial</td></tr>
+            <tr><td>02 · UGC</td><td>Vídeo de celular 20s</td><td>Caimento oversized boxy</td></tr>
+            <tr><td>03 · Arquivo</td><td>Carrossel</td><td>Escassez real como razão de compra</td></tr>
+            <tr><td>04 · Explicador</td><td>Estático</td><td>Guia de tamanho — mata a objeção nº1</td></tr>
+            <tr><td>05 · Lifestyle</td><td>Carrossel</td><td>Shooting 25/07 · marca</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout">
+        <p><strong>Regra de ouro:</strong> todo Reel que passar de 5.000 visualizações orgânicas vira anúncio. Ele já provou o hook com público frio, de graça — subir como anúncio é comprar mais entrega de algo validado, que é o uso mais eficiente possível de R$30/dia.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 CHECKLIST -->
+  <section>
+    <div class="rail"><span class="ref">06</span><span class="lbl">Checklist<br>bloqueante</span></div>
+    <div class="body-col">
+      <h2>Nada de mídia paga antes disto</h2>
+      <p>Com R$30/dia, sinal ruim de conversão não é um detalhe técnico — é o orçamento inteiro entregue para o público errado.</p>
+      <div class="checks">
+        <div class="chk block"><span class="box"></span><span>Ativar a CAPI da Nuvemshop com deduplicação por <code>event_id</code><span class="tag">Bloqueante</span></span></div>
+        <div class="chk block"><span class="box"></span><span>Validar <strong>EMQ ≥ 7</strong> nos eventos-chave<span class="tag">Bloqueante</span></span></div>
+        <div class="chk block"><span class="box"></span><span>Compra-teste real: evento aparece <strong>uma vez só</strong>, em menos de 2 minutos, com <code>value</code> e <code>currency</code><span class="tag">Bloqueante</span></span></div>
+        <div class="chk"><span class="box"></span><span>Recontar o estoque de arquivo por peça e tamanho</span></div>
+        <div class="chk"><span class="box"></span><span>Confirmar e publicar os preços finais do AW26</span></div>
+        <div class="chk"><span class="box"></span><span>Tabela de medidas em <strong>toda</strong> página de produto</span></div>
+        <div class="chk"><span class="box"></span><span>Normalizar os 500 telefones para E.164 antes de subir como público</span></div>
+        <div class="chk"><span class="box"></span><span>Barra de progresso do carrinho + order bump do chaveiro</span></div>
+        <div class="chk"><span class="box"></span><span>Conectar catálogo do Meta, Instagram Shopping e listagens gratuitas do Google Shopping</span></div>
+        <div class="chk"><span class="box"></span><span>Testar a loja no celular — a maior parte do tráfego do Meta é mobile</span></div>
+      </div>
+
+      <h3>Os erros que matariam o plano</h3>
+      <ul class="plain">
+        <li>Ligar o paid antes do EMQ chegar a 7</li>
+        <li>Mexer na campanha nos primeiros sete dias</li>
+        <li>Dividir R$30/dia em três conjuntos</li>
+        <li>Dar 20% off na vitrine pública</li>
+        <li>Anunciar o arquivo com mídia paga</li>
+        <li>Disparar 500 WhatsApps de uma vez</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 07 PAINEL -->
+  <section style="border-bottom:none">
+    <div class="rail"><span class="ref">07</span><span class="lbl">Painel<br>semanal</span></div>
+    <div class="body-col">
+      <h2>Cinco números, toda segunda</h2>
+      <div class="tw">
+        <table>
+          <thead><tr><th>#</th><th>Métrica</th><th>Alvo</th></tr></thead>
+          <tbody>
+            <tr><td class="num">1</td><td><strong>Pedidos no mês</strong></td><td class="num">2–3 → 15+</td></tr>
+            <tr><td class="num">2</td><td><strong>Ticket médio (AOV)</strong></td><td class="num">R$132 → R$219</td></tr>
+            <tr><td class="num">3</td><td>Receita por canal (grupo · base · orgânico)</td><td>separada</td></tr>
+            <tr><td class="num">4</td><td>Conversas 1 a 1 por semana</td><td class="num">≥ 40</td></tr>
+            <tr><td class="num">5</td><td>Peças de arquivo liquidadas</td><td class="num">→ 0</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p><strong>Pedidos e ticket são os dois números-mestres</strong> — nessa ordem. Enquanto o volume estiver em 2–3/mês, nenhuma métrica de mídia significa coisa alguma: não há amostra. Primeiro sobe o volume pelo canal próprio, depois o ticket pelo combo, e só então o ROAS passa a ser uma pergunta respondível.</p>
+
+      <div class="callout crit">
+        <p><strong>O critério para religar a mídia:</strong> 15+ pedidos/mês vindos de canal próprio, com o Pixel registrando compras reais. Antes disso, R$900/mês compram ruído estatístico. Depois disso, compram escala — e aí cada real tem em cima o que multiplicar.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    BVBA Supply® · CNPJ 41.242.625/0001-47<br>
+    Plano completo, copy dos anúncios, roteiros e scripts: repositório <span style="color:var(--ink)">bvba-qa / plano-360</span><br>
+    Emitido em 11.08.2026
+  </footer>
+
+</div>
