@@ -19,6 +19,7 @@
 | [`04-crm-whatsapp-email.md`](04-crm-whatsapp-email.md) | Scripts de reativação da base, sequências e automações |
 | [`05-calendario-8-semanas.md`](05-calendario-8-semanas.md) | Cronograma dia a dia, com responsáveis e gatilhos |
 | [`06-medicao-e-checklist.md`](06-medicao-e-checklist.md) | Setup de Pixel/CAPI, KPIs, checklist bloqueante de lançamento |
+| [`07-fontes-e-proveniencia.md`](07-fontes-e-proveniencia.md) | **Leia antes de agir nos números.** Classifica cada dado por origem — oficial, terceiro ou estimativa minha |
 
 ---
 
@@ -63,9 +64,11 @@ Levantamento feito a partir do Drive da BVBA, do Gmail operacional, do site e do
 
 ### 1.2 O problema central
 
-A conta de Meta Ads vem gastando de forma consistente: **R$759 (jun) · R$385 (jun) · R$759 (jul) · R$350 (jul) · R$759 (ago)** — cerca de **R$1.100/mês**, ou ~R$36/dia. Há um fluxo constante de e-mails "Seus anúncios foram aprovados" — em 31/07 foram **4 aprovações no mesmo dia**, em 29–30/05 outras 4.
+A conta de Meta Ads vem gastando de forma consistente: **R$759 (jun) · R$385 (jun) · R$759 (jul) · R$350 (jul) · R$759 (ago)** — cerca de **R$1.100/mês**, ou ~R$36/dia. Esses valores são de recibos que identificam nominalmente a conta *CA - BVBA SUPPLY (321768910427826)*.
 
-Isso descreve uma conta que **sobe criativo com muita frequência e roda com orçamento diário baixo**. É a combinação que mais destrói performance no Meta em 2026: cada edição estrutural reinicia o aprendizado, e o orçamento nunca acumula conversões suficientes para sair dele.
+> **Correção de uma versão anterior deste diagnóstico.** Eu havia afirmado que a conta subia criativo com frequência excessiva, com base nos e-mails "Seus anúncios foram aprovados". Ao abrir o conteúdo desses e-mails, a maioria é de **outras contas de anúncio** que chegam na mesma caixa (Instituto O Setor Elétrico, CIDE, GTP Telles). A afirmação não se sustenta e foi retirada. Detalhes em [`07-fontes-e-proveniencia.md`](07-fontes-e-proveniencia.md).
+
+O problema real não é rotação de criativo — é aritmética de ticket contra orçamento.
 
 **A matemática crua a R$30/dia:**
 
