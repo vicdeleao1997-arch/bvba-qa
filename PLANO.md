@@ -135,7 +135,17 @@ Enquanto isso, os ~R$900/mês que não vão para anúncio têm destino melhor: *
 
 ---
 
-## 7. O que fazer amanhã de manhã
+## 7. Material de execução pronto
+
+| Documento | Para quê |
+|---|---|
+| [`plano-360/10-abertura-publica-14-08.md`](plano-360/10-abertura-publica-14-08.md) | Playbook da abertura de 14/08 — mecânica nova do brinde, copy pronta, o que não fazer |
+| [`plano-360/11-motor-1a1.md`](plano-360/11-motor-1a1.md) | Os cinco segmentos de conversa, script de cada um e a rotina de 8 por dia |
+| [`plano-360/04-crm-whatsapp-email.md`](plano-360/04-crm-whatsapp-email.md) | Pós-venda e carrinho abandonado |
+
+---
+
+## 8. O que fazer amanhã de manhã
 
 1. **Terminar a janela VIP** (fecha 13/08) no 1 a 1 com os 218. Sem mídia, como está.
 2. **Preparar a abertura pública de 14/08** com o brinde já por tamanho de carrinho.
