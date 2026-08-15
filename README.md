@@ -1,263 +1,98 @@
-# Agente de drop — BVBA na Nuvemshop
+# BVBA Supply® — repositório consolidado
 
-Agente autonomo que sobe os produtos novos da BVBA para a Nuvemshop **como
-rascunho** e publica todos de uma vez no horario do lancamento.
+Este branch reúne **todos os projetos** que estavam espalhados em branches
+separadas do `bvba-qa`. Antes, cada sessão do Claude terminava numa branch
+própria e o `main` ficava com um README de uma linha; para ver tudo era
+preciso saber os quatro nomes de branch de cor. Agora um `git clone` só traz
+o repositório inteiro.
 
-A regra central: **subir nunca publica**. O upload sempre grava
-`published: false`, e a visibilidade so muda por um comando separado e
-explicito. Isso e travado em codigo e coberto por teste — nao depende de
-ninguem lembrar de desmarcar uma caixinha.
-
-Sem dependencia nenhuma: Python 3.9+ e biblioteca padrao.
-
----
-
-## O caminho do drop, em 4 comandos
-
-```bash
-# 1. Confere a planilha sem tocar na loja
-python -m agente_drop validar
-
-# 2. Confere as credenciais
-python -m agente_drop conferir
-
-# 3. Sobe tudo como rascunho (invisivel na loja)
-python -m agente_drop subir --aplicar
-
-# 4. Agenda a publicacao para as 20h
-python -m agente_drop publicar --as 20:00
-```
-
-Deu ruim depois de publicar? `python -m agente_drop despublicar --sim` tira
-tudo do ar.
+Os branches originais **continuam intactos** — nada foi apagado nem
+reescrito. Esta branch é a soma deles.
 
 ---
 
-## Instalacao
+## Os quatro projetos
 
-```bash
-git clone <este-repo> && cd bvba-qa
-cp .env.exemplo .env
-```
+| # | Projeto | Onde está | O que é |
+|---|---|---|---|
+| 1 | **Agente de drop — Nuvemshop** | [`README-agente-drop.md`](README-agente-drop.md) · `agente_drop/` `catalogo/` `testes/` | Código Python. Sobe o drop como rascunho e publica tudo no horário. 156 testes, sem dependências. |
+| 2 | **Plano de marketing** | [`PLANO.md`](PLANO.md) · [`plano-360/`](plano-360/) | Documentação operacional. Plano v2 (mídia zerada) + os 10 documentos de apoio do plano 360. |
+| 3 | **QA das imagens de e-commerce** | [`AVALIACAO_OUTPUTS_ECOMMERCE.md`](AVALIACAO_OUTPUTS_ECOMMERCE.md) | Auditoria do acervo Magnific contra a regra de IA da marca. |
+| 4 | **Pesquisa — economia prateada** | [`pesquisa/economia-prateada-negocios-50-mais.md`](pesquisa/economia-prateada-negocios-50-mais.md) | Pesquisa de mercado sobre negócios para o público 50+. Não é sobre a BVBA. |
 
-Preencha o `.env`:
-
-```ini
-NUVEMSHOP_STORE_ID=1234567
-NUVEMSHOP_ACCESS_TOKEN=seu_token_permanente
-NUVEMSHOP_USER_AGENT=BVBA Drop Agent (contato@bvba.com.br)
-```
-
-O `NUVEMSHOP_USER_AGENT` **precisa** ter um email entre parenteses: a API da
-Nuvemshop devolve `400` para requisicao sem User-Agent identificavel. O token
-sai do painel em *Meus aplicativos*, na autorizacao do app, e nao expira.
-
-Confirme com `python -m agente_drop conferir` — ele imprime o nome da loja se
-tudo estiver certo, e diz exatamente o que corrigir se nao estiver.
+Contexto de marca e regras que valem para tudo: [`CLAUDE.md`](CLAUDE.md).
+Estado da última sessão de marketing: [`HANDOFF.md`](HANDOFF.md).
 
 ---
 
-## Preenchendo o catalogo
-
-Os produtos ficam em `catalogo/produtos.csv`. Uma linha por variante; linhas
-com o mesmo `nome` viram um produto com varios tamanhos.
-
-```csv
-nome,descricao,sku,preco,estoque,tamanho,peso,imagens
-Camiseta Signature,"Malha 240g.",BVBA-CAM-P,199.90,12,P,0.35,https://.../1.jpg
-Camiseta Signature,,BVBA-CAM-M,199.90,25,M,0.38,
-Camiseta Signature,,BVBA-CAM-G,199.90,25,G,0.41,
-```
-
-Os cabecalhos aceitam acento e ingles (`Preço`, `price`, `valor` — tudo cai no
-mesmo lugar). A lista completa esta em [`catalogo/COLUNAS.md`](catalogo/COLUNAS.md),
-e ha um exemplo preenchido em `catalogo/exemplo-drop.csv`.
-
-Tambem aceita JSON (`--catalogo produtos.json`), com variantes aninhadas.
-
-### Validar antes de subir
+## 1 · Agente de drop (o único que é código)
 
 ```bash
-python -m agente_drop validar
+python3 -m unittest discover -s testes -t .   # 156 testes, ~10s, sem rede
+python3 -m agente_drop validar                # confere o catálogo sem tocar na loja
 ```
 
-Aponta com numero de linha o que a Nuvemshop rejeitaria ou o que sairia torto:
-preco faltando, promocional maior que o cheio, SKU repetido, foto que nao
-existe no disco, variante sem tamanho, mais de 3 atributos. **Erro** bloqueia
-o upload; **aviso** so informa.
+Manual completo em [`README-agente-drop.md`](README-agente-drop.md).
+
+> **Estado real do catálogo:** `python3 -m agente_drop validar` acusa hoje
+> **55 erros e 11 avisos** — as 11 peças do AW 2026 estão sem preço e sem
+> foto. Isso é pendência de conteúdo, não bug: o caminho para resolver está
+> em [`catalogo/PENDENTE.md`](catalogo/PENDENTE.md) (preencher
+> `catalogo/pendencias.txt` e rodar `python3 ferramentas/preencher.py`).
+
+## 2 · Plano de marketing
+
+Leia nesta ordem: [`PLANO.md`](PLANO.md) (o plano vigente, sem orçamento de
+mídia) → [`plano-360/08-contexto-consolidado.md`](plano-360/08-contexto-consolidado.md)
+(tem precedência onde houver conflito) →
+[`plano-360/07-fontes-e-proveniencia.md`](plano-360/07-fontes-e-proveniencia.md)
+(classifica cada número por origem).
+
+`plano-360/` é material de apoio: a copy, os scripts de WhatsApp e o
+checklist de medição seguem válidos; a arquitetura de mídia paga, não.
+
+## 3 · QA das imagens
+
+[`AVALIACAO_OUTPUTS_ECOMMERCE.md`](AVALIACAO_OUTPUTS_ECOMMERCE.md) declara na
+abertura a própria limitação: é auditoria do **registro de produção**
+(prompts, modelos, custos), não QA visual — a rede da sessão bloqueava os
+hosts das imagens. Leia a seção 0 antes de agir nas conclusões.
+
+## 4 · Pesquisa da economia prateada
+
+Trabalho independente da BVBA, guardado aqui por conveniência.
 
 ---
 
-## Subindo
+## De onde veio cada coisa
 
-Duas formas.
+| Branch de origem | Trouxe |
+|---|---|
+| `claude/bvba-autonomous-agent-lwnadl` | agente de drop, catálogo, testes, workflows |
+| `claude/bvba-360-marketing-plan-xv9rux` | `PLANO.md`, `plano-360/`, `CLAUDE.md`, `HANDOFF.md` |
+| `claude/bvba-ecommerce-image-outputs-y9nfvc` | `AVALIACAO_OUTPUTS_ECOMMERCE.md` |
+| `claude/business-senior-50-plus-csbmvr` | `pesquisa/` |
 
-**Pelo GitHub, sem token na sua maquina** (aba *Actions* > *Subir drop
-(rascunho)* > *Run workflow*). O token fica so nos secrets do repositorio,
-ninguem precisa colar credencial em lugar nenhum. Deixe `simular` marcado na
-primeira vez para ver o plano; desmarque para subir de verdade. Ao final o
-workflow comita o `.estado_drop.json`, que e o que a publicacao das 20h usa.
+Só dois arquivos precisaram de decisão na junção:
 
-**Ou pelo terminal:**
+- **`.gitignore`** — as duas versões foram unidas. A regra `.env.*` do plano
+  de marketing engoliria o `.env.exemplo` do agente, então há um `!.env.exemplo`
+  explícito preservando o modelo (que não tem segredo nenhum).
+- **`README.md`** — o do agente virou `README-agente-drop.md`, com todos os
+  links relativos ainda válidos, e a raiz passou a ser este índice.
 
-```bash
-python -m agente_drop plano          # mostra o que faria, sem escrever
-python -m agente_drop subir --aplicar
-```
-
-Sem `--aplicar` o comando so simula. O que o agente faz:
-
-- cria cada produto com todas as variantes, ja com preco, estoque, peso, SKU e
-  codigo de barras;
-- gera slug, `seo_title` e `seo_description` a partir do nome, da marca e da
-  descricao, quando voce nao preencheu;
-- envia as fotos **uma requisicao por foto**, para que uma imagem quebrada nao
-  derrube o produto inteiro;
-- respeita o limite da API (balde de 40 requisicoes, 2 por segundo) e tenta de
-  novo sozinho em `429` e `5xx`, com backoff;
-- grava tudo em `.estado_drop.json` a cada produto.
-
-### Pode rodar de novo, sem medo
-
-O `.estado_drop.json` liga cada SKU ao ID criado na loja. Rodar de novo:
-
-- produto novo na planilha → cria;
-- produto que mudou → atualiza (so as variantes que mudaram; fotos ja enviadas
-  nao sobem duas vezes);
-- produto identico → pula.
-
-Nada duplica. E se a loja ja estiver publicada quando voce corrigir uma
-descricao, a atualizacao **nao** devolve o produto para rascunho.
+Nenhum arquivo dos quatro projetos foi movido de lugar ou editado no
+conteúdo.
 
 ---
 
-## Publicando as 20h
-
-Tres formas, da mais autonoma para a mais manual.
-
-### 1. GitHub Actions (ninguem precisa estar no computador)
-
-E o modo recomendado, e o que esta configurado em
-`.github/workflows/publicar-drop.yml`.
-
-Configure uma vez, em *Settings > Secrets and variables > Actions*:
-
-| Tipo     | Nome | Valor |
-|----------|------|-------|
-| Secret   | `NUVEMSHOP_STORE_ID` | o id da loja |
-| Secret   | `NUVEMSHOP_ACCESS_TOKEN` | o token |
-| Secret   | `NUVEMSHOP_USER_AGENT` | `BVBA Drop Agent (contato@bvba.com.br)` |
-| Variable | `DROP_DATA` | a data do drop, `AAAA-MM-DD` |
-
-O `.estado_drop.json` precisa estar comitado — e por ele que o workflow sabe
-quais produtos publicar. O workflow *Subir drop* ja faz esse commit sozinho.
-
-O agendamento tem duas protecoes que importam num lancamento:
-
-- o cron dispara as 19:40 de Brasilia e o **agente espera ate 20:00:00 em
-  ponto**, porque o cron da GitHub Actions costuma atrasar alguns minutos;
-- se mesmo assim o runner so acordar depois das 20h, ele publica na hora —
-  desde que o atraso esteja dentro de `--tolerancia` (120 min por padrao).
-  Atraso maior que isso, ele **nao** publica sozinho e avisa.
-
-Da para disparar na mao a qualquer momento pela aba *Actions* (inclusive em
-modo `simular`, que so mostra o status).
-
-### 2. Deixando um terminal aberto
+## Trazendo para a sua máquina
 
 ```bash
-python -m agente_drop publicar --as 20:00
+git clone https://github.com/vicdeleao1997-arch/bvba-qa.git
+cd bvba-qa
+git checkout claude/trazer-projetos-pc-0vlyki
+claude
 ```
 
-Espera ate o horario e publica, avisando quanto falta. `Ctrl+C` cancela sem
-publicar nada. Aceita `20:00`, `20h`, `20h30` ou `"2026-08-10 20:00"`.
-
-### 3. Na hora, no grito
-
-```bash
-python -m agente_drop publicar --agora
-```
-
-### Conferindo e revertendo
-
-```bash
-python -m agente_drop status          # compara o estado local com a loja
-python -m agente_drop despublicar --sim
-```
-
----
-
-## Ensaiando sem tocar na loja real
-
-Da para rodar o drop inteiro contra uma Nuvemshop de mentira, local:
-
-```bash
-# terminal 1
-python ferramentas/loja_falsa.py
-
-# terminal 2
-NUVEMSHOP_API_BASE=http://localhost:8799 \
-NUVEMSHOP_STORE_ID=123456 \
-NUVEMSHOP_ACCESS_TOKEN=ensaio \
-NUVEMSHOP_USER_AGENT="Ensaio (qa@bvba.com.br)" \
-python -m agente_drop subir --catalogo catalogo/exemplo-drop.csv \
-  --estado /tmp/ensaio.json --aplicar
-```
-
-A loja falsa imprime cada produto, variante e foto que recebe — e reproduz as
-duas recusas classicas da API real (falta de `Authentication` e User-Agent sem
-email), entao serve para testar o tratamento de erro tambem.
-
----
-
-## Testes
-
-```bash
-python -m unittest discover -s testes -t .
-```
-
-130 testes, sem rede. Cobrem o parsing de preco brasileiro, o agrupamento de
-variantes, as regras de validacao, o rate limit e o retry, a idempotencia, e o
-caminho completo da CLI contra um servidor HTTP de verdade.
-
-Dois deles guardam as invariantes que sustentam o drop:
-
-- `test_payload_sempre_sai_como_rascunho` — upload nunca publica;
-- `test_update_nao_mexe_na_visibilidade` — corrigir um preco com a loja no ar
-  nao derruba o produto.
-
----
-
-## Estrutura
-
-```
-agente_drop/
-  catalogo.py    le CSV/JSON, agrupa variantes, entende preco brasileiro
-  validacao.py   regras que rodam antes de qualquer chamada de rede
-  payload.py     monta o JSON da API (e trava published=false)
-  nuvemshop.py   cliente HTTP: auth, rate limit, retry, paginacao
-  estado.py      liga SKU -> id do produto; e o que torna tudo idempotente
-  agente.py      decide criar/atualizar/pular e executa
-  relogio.py     horario de Brasilia e a espera ate o lancamento
-  relatorio.py   relatorio em Markdown e JSON
-  cli.py         os comandos
-catalogo/        a planilha do drop + dicionario de colunas
-ferramentas/     loja falsa para ensaio local
-testes/          130 testes
-```
-
----
-
-## Detalhes da API que valem saber
-
-Estao tratados no codigo, mas explicam decisoes que parecem estranhas:
-
-- o header de autenticacao da v1 se chama `Authentication`, **nao**
-  `Authorization` (o nome errado devolve 401). As versoes datadas usam
-  `Authorization`. O agente manda os dois;
-- `User-Agent` e obrigatorio e precisa ter email de contato, ou a resposta e 400;
-- o limite e um *leaky bucket*: balde de 40 requisicoes vazando 2 por segundo.
-  Estourar devolve 429 com `X-Rate-Limit-Reset` em milissegundos, que o agente
-  respeita;
-- `name`, `description` e `handle` sao objetos por idioma (`{"pt": "..."}`);
-- precos vao como string (`"199.90"`), com ponto decimal.
+O `CLAUDE.md` carrega sozinho e traz o contexto da marca.

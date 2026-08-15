@@ -1,7 +1,9 @@
 # BVBA Supply® — contexto de trabalho
 
-Repositório de planejamento de marketing da **BVBA Supply®**, marca brasileira de streetwear.
-Não é código: é documentação operacional.
+Repositório da **BVBA Supply®**, marca brasileira de streetwear. Reúne quatro projetos:
+o **agente de drop da Nuvemshop** (código Python, em `agente_drop/`), o **planejamento de
+marketing** (documentação operacional), a **auditoria das imagens de e-commerce** e uma
+**pesquisa de mercado** independente. O índice de tudo está no [`README.md`](README.md).
 
 > ## 📍 O plano atual é [`PLANO.md`](PLANO.md)
 >
@@ -33,9 +35,12 @@ Como iniciar na máquina:
 ```bash
 git clone https://github.com/vicdeleao1997-arch/bvba-qa.git
 cd bvba-qa
-git checkout claude/bvba-360-marketing-plan-xv9rux
+git checkout claude/trazer-projetos-pc-0vlyki
 claude
 ```
+
+Essa branch é a consolidada: traz os quatro projetos de uma vez. As branches
+originais de cada um continuam existindo, intactas.
 
 Se uma sessão remota for inevitável, ela ainda serve para Drive, Gmail, Calendar, GitHub e redação — mas **deve dizer explicitamente** o que não conseguiu verificar, em vez de assumir.
 
