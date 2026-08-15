@@ -1,0 +1,28 @@
+# Preencha uma linha por peça e rode:
+#
+#     python3 ferramentas/preencher.py
+#
+# Os campos são separados por | e qualquer um pode ficar vazio.
+#
+#   REF      -> não mexa, é a referência de produção
+#   preço    -> 399,90  ou  R$ 399,90  ou  399.90
+#   estoque  -> um número por tamanho na ordem P,M,G,GG,XGG (ex.: 10,15,15,10,5)
+#               ou um número só, que vale para todos os tamanhos (ex.: 12)
+#               vazio = vende sem controle de estoque
+#   fotos    -> os números dos arquivos BVBA_-N.jpg da peça, em faixas ou solto
+#               ex.: 1-8        ex.: 1-6, 10, 14      ex.: 3,4,5
+#               a primeira da lista vira a foto de capa
+#
+# REF     | preço | estoque P,M,G,GG,XGG | fotos
+
+MLT-001   |       |                      |
+CJW-002   |       |                      |
+JRT-003   |       |                      |
+CMS-004   |       |                      |
+CMS-005   |       |                      |
+CMS-006   |       |                      |
+CMS-007   |       |                      |
+CMS-008   |       |                      |
+CMS-009   |       |                      |
+CMS-010   |       |                      |
+CMS-011   |       |                      |

@@ -16,7 +16,25 @@
 *.key
 .env
 .env.*
+# ...menos o modelo sem segredo do agente de drop, que precisa ser versionado
+# para o `cp .env.exemplo .env` da instalação funcionar.
+!.env.exemplo
+
+# Relatorios gerados a cada execucao do agente de drop
+relatorios/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
 
 # Sistema
 .DS_Store
 Thumbs.db
+
+# Nao ignoramos de proposito:
+#   .estado_drop.json  -> precisa estar versionado para a publicacao agendada
+#                         das 20h saber quais produtos publicar (so IDs, nada secreto)
+#   imagens/           -> as fotos do drop ficam no repo junto do catalogo
