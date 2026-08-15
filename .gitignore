@@ -1,0 +1,22 @@
+# Dados pessoais de clientes — NUNCA versionar.
+# Este repositório vai para o GitHub; commitar a base de contatos seria
+# vazamento de dados. Os arquivos de público personalizado e a base de
+# telefones ficam apenas no Google Drive da marca.
+*telefone*.csv
+*contatos*.csv
+*clientes*.csv
+*publico-personalizado*.csv
+*E164*.csv
+*auditoria*.csv
+
+# Credenciais e certificados
+*.pfx
+*.p12
+*.pem
+*.key
+.env
+.env.*
+
+# Sistema
+.DS_Store
+Thumbs.db

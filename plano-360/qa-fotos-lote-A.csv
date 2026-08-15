@@ -1,0 +1,2 @@
+arquivo,veredito,defeito,gravidade,onde,acao
+BVBA_-1.jpg,REPROVADA,arquivo_corrompido,alta,"arquivo inteiro — JPEG de 160 bytes, 1x1 pixel preto, nao e um packshot",remover_do_site
