@@ -9,6 +9,17 @@
 *E164*.csv
 *auditoria*.csv
 
+# Dados pessoais de imigração — NUNCA versionar.
+# Passaporte, data de nascimento, endereço, extrato bancário, exame medico e
+# perfil nominal ficam apenas no Google Drive (BVBA SUPPLY / Imigracao Canada).
+# Este repositorio e publico; dado de imigracao e mais sensivel que a base de
+# clientes. O modelo em branco fica versionado para servir de formulario.
+imigracao-canada/perfis/*
+!imigracao-canada/perfis/MODELO-perfil.md
+imigracao-canada/documentos/
+*passaporte*
+*proof-of-funds*
+
 # Credenciais e certificados
 *.pfx
 *.p12
