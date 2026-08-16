@@ -11,7 +11,7 @@ reescrito. Esta branch é a soma deles.
 
 ---
 
-## Os quatro projetos
+## Os cinco projetos
 
 | # | Projeto | Onde está | O que é |
 |---|---|---|---|
@@ -19,6 +19,7 @@ reescrito. Esta branch é a soma deles.
 | 2 | **Plano de marketing** | [`PLANO.md`](PLANO.md) · [`plano-360/`](plano-360/) | Documentação operacional. Plano v2 (mídia zerada) + os 10 documentos de apoio do plano 360. |
 | 3 | **QA das imagens de e-commerce** | [`AVALIACAO_OUTPUTS_ECOMMERCE.md`](AVALIACAO_OUTPUTS_ECOMMERCE.md) | Auditoria do acervo Magnific contra a regra de IA da marca. |
 | 4 | **Pesquisa — economia prateada** | [`pesquisa/economia-prateada-negocios-50-mais.md`](pesquisa/economia-prateada-negocios-50-mais.md) | Pesquisa de mercado sobre negócios para o público 50+. Não é sobre a BVBA. |
+| 5 | **Imigração Canadá** | [`imigracao-canada/`](imigracao-canada/) · skill [`imigracao-canada`](.claude/skills/imigracao-canada/SKILL.md) | Agente sênior de imigração canadense. Base de programas, cálculo de CRS e condução do processo de PR para Ontário. Não é sobre a BVBA. |
 
 Contexto de marca e regras que valem para tudo: [`CLAUDE.md`](CLAUDE.md).
 Estado da última sessão de marketing: [`HANDOFF.md`](HANDOFF.md).
