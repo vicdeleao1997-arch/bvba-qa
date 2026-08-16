@@ -1,13 +1,17 @@
-# BVBA Supply® — repositório consolidado
+# BVBA Supply®
 
-Este branch reúne **todos os projetos** que estavam espalhados em branches
-separadas do `bvba-qa`. Antes, cada sessão do Claude terminava numa branch
-própria e o `main` ficava com um README de uma linha; para ver tudo era
-preciso saber os quatro nomes de branch de cor. Agora um `git clone` só traz
-o repositório inteiro.
+Todos os projetos da marca num lugar só. Um `git clone` traz o repositório
+inteiro — não existe mais branch escondida com metade do trabalho.
 
-Os branches originais **continuam intactos** — nada foi apagado nem
-reescrito. Esta branch é a soma deles.
+As duas máquinas (MacBook e desktop Windows 11) ficam **em sincronia sozinhas**,
+a cada 15 minutos, pelo GitHub. Como ligar isso está em
+[`sinc/README.md`](sinc/README.md).
+
+```
+   MacBook  ──┐                    ┌──  Desktop Windows 11
+  (launchd)   ├──►  GitHub  ◄──────┤   (Agendador de Tarefas)
+   15 em 15   ┘                    └──   15 em 15
+```
 
 ---
 
@@ -64,7 +68,36 @@ Trabalho independente da BVBA, guardado aqui por conveniência.
 
 ---
 
+## Sincronia entre as duas máquinas
+
+Manual completo em [`sinc/README.md`](sinc/README.md). O essencial:
+
+```bash
+git clone https://github.com/vicdeleao1997-arch/bvba-qa.git
+cd bvba-qa
+
+./sinc/instalar-macos.sh          # MacBook
+```
+```powershell
+.\sinc\instalar-windows.ps1       # desktop Windows 11
+```
+
+Depois disso, nada. As duas máquinas se acertam a cada 15 minutos.
+
+Três coisas a sincronia **não** faz, de propósito: não deixa dado de cliente
+entrar no Git, não publica código com teste quebrado, e não resolve conflito
+sozinha sobrescrevendo — ela para e avisa. Nenhum `--force` existe nesse código.
+
+O que fica de fora: cofre do Obsidian, fotos do Drive, base de telefones e o
+`.env` de cada máquina. Isso é escolha, não esquecimento — a tabela em
+[`sinc/README.md`](sinc/README.md) diz quem cuida de cada um.
+
+---
+
 ## De onde veio cada coisa
+
+Cada projeto nasceu numa branch própria. Todas foram unidas no `main` (PR #5);
+as originais continuam intactas, nada foi apagado nem reescrito.
 
 | Branch de origem | Trouxe |
 |---|---|
@@ -73,26 +106,14 @@ Trabalho independente da BVBA, guardado aqui por conveniência.
 | `claude/bvba-ecommerce-image-outputs-y9nfvc` | `AVALIACAO_OUTPUTS_ECOMMERCE.md` |
 | `claude/business-senior-50-plus-csbmvr` | `pesquisa/` |
 
-Só dois arquivos precisaram de decisão na junção:
+Nenhum arquivo dos quatro projetos foi movido de lugar. Só três precisaram de
+decisão:
 
-- **`.gitignore`** — as duas versões foram unidas. A regra `.env.*` do plano
-  de marketing engoliria o `.env.exemplo` do agente, então há um `!.env.exemplo`
+- **`.gitignore`** — as duas versões unidas. A regra `.env.*` do plano de
+  marketing engoliria o `.env.exemplo` do agente, então há um `!.env.exemplo`
   explícito preservando o modelo (que não tem segredo nenhum).
-- **`README.md`** — o do agente virou `README-agente-drop.md`, com todos os
-  links relativos ainda válidos, e a raiz passou a ser este índice.
-
-Nenhum arquivo dos quatro projetos foi movido de lugar ou editado no
-conteúdo.
-
----
-
-## Trazendo para a sua máquina
-
-```bash
-git clone https://github.com/vicdeleao1997-arch/bvba-qa.git
-cd bvba-qa
-git checkout claude/trazer-projetos-pc-0vlyki
-claude
-```
-
-O `CLAUDE.md` carrega sozinho e traz o contexto da marca.
+- **`README.md`** — o do agente virou `README-agente-drop.md`, com os links
+  relativos ainda válidos, e a raiz passou a ser este índice.
+- **`catalogo/produtos.csv`** — estava versionado em CRLF, o que faria o Mac e o
+  Windows brigarem a cada sincronia. Convertido para LF, dados conferidos linha
+  a linha. O [`.gitattributes`](.gitattributes) impede que volte a acontecer.

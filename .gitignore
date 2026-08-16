@@ -33,6 +33,10 @@ venv/
 # Sistema
 .DS_Store
 Thumbs.db
+desktop.ini
+
+# Log e trava da sincronia — local de cada maquina, nunca versionar
+sinc/.log/
 
 # Nao ignoramos de proposito:
 #   .estado_drop.json  -> precisa estar versionado para a publicacao agendada

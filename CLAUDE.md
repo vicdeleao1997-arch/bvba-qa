@@ -22,7 +22,7 @@ marketing** (documentação operacional), a **auditoria das imagens de e-commerc
 
 Motivo concreto, já verificado: o ambiente remoto tem política de egresso "negar tudo". O gateway responde `403 Forbidden` no CONNECT para `api.nuvemshop.com.br`, `graph.facebook.com`, `drive.google.com` e até `example.com`. Sessão remota **não alcança** o painel da Nuvemshop nem o Gerenciador de Anúncios da Meta, e nenhuma permissão de conta contorna isso — o bloqueio é anterior à credencial.
 
-| | Sessão local (Mac) | Sessão remota (nuvem) |
+| | Sessão local (MacBook ou desktop Win11) | Sessão remota (nuvem) |
 |---|---|---|
 | Nuvemshop, Meta Ads | ✅ | ❌ egresso 403 |
 | Site bvbasupply.com.br | ✅ | ❌ egresso 403 |
@@ -30,17 +30,36 @@ Motivo concreto, já verificado: o ambiente remoto tem política de egresso "neg
 | Drive, Gmail, Calendar | ✅ | ✅ (via MCP, autentica no servidor) |
 | GitHub | ✅ | ✅ |
 
-Como iniciar na máquina:
+Como iniciar, em qualquer uma das duas máquinas:
 
 ```bash
 git clone https://github.com/vicdeleao1997-arch/bvba-qa.git
 cd bvba-qa
-git checkout claude/trazer-projetos-pc-0vlyki
 claude
 ```
 
-Essa branch é a consolidada: traz os quatro projetos de uma vez. As branches
-originais de cada um continuam existindo, intactas.
+O `main` já traz os quatro projetos — não existe branch a lembrar.
+
+### As duas máquinas ficam em sincronia sozinhas
+
+MacBook e desktop Windows 11 rodam a mesma rotina de sincronia a cada 15
+minutos, pelo GitHub. Ligar é uma vez por máquina:
+
+```bash
+./sinc/instalar-macos.sh          # MacBook
+```
+```powershell
+.\sinc\instalar-windows.ps1       # desktop Windows 11
+```
+
+Manual, travas de segurança e diagnóstico: [`sinc/README.md`](sinc/README.md).
+
+**O que isso significa ao trabalhar:** o que você fizer numa máquina aparece na
+outra em até 15 minutos, sem pedir. Se você e a outra máquina editarem as mesmas
+linhas do mesmo arquivo, a sincronia **para e avisa** em vez de sobrescrever —
+`sinc/.log/PROBLEMA.txt` conta o que houve. E se o código dos testes quebrar, o
+envio é segurado até passar: o trabalho fica salvo local, mas não contamina a
+outra máquina.
 
 Se uma sessão remota for inevitável, ela ainda serve para Drive, Gmail, Calendar, GitHub e redação — mas **deve dizer explicitamente** o que não conseguiu verificar, em vez de assumir.
 
@@ -82,7 +101,7 @@ O plano de lançamento de 02/08 registra que 8 pedidos seriam *"mais que o trime
 
 1. **Política de IA em imagem:** *"peça real, nunca regenerada; só o ambiente é gerado por IA."* Nunca gere uma imagem que finja ser a peça — a cliente receberia algo diferente do anunciado. Cenário e fundo, sim; produto, não.
 2. **Desconto:** ou o item é bônus (100% off como add-on), ou é 50%+ em evento fechado. Desconto de 10–20% na vitrine pública só corta margem de quem já ia comprar e destrói o preço de referência.
-3. **Dados de cliente nunca entram no Git.** A base de telefones e qualquer export de pedidos ficam só no Drive — este repositório é publicado no GitHub. O `.gitignore` bloqueia os padrões, mas confira antes de commitar.
+3. **Dados de cliente nunca entram no Git.** A base de telefones e qualquer export de pedidos ficam só no Drive — este repositório é publicado no GitHub. Há dois cadeados: o `.gitignore` bloqueia os padrões, e a sincronia varre o stage antes de cada commit e **para tudo** se achar arquivo com cara de base de contatos ou credencial (pega até `git add -f`). Dois cadeados não dispensam olhar antes de commitar.
 4. **Não fragmentar mídia.** Com R$30/dia, uma campanha e um conjunto. Dividir em três impede que qualquer um saia do aprendizado.
 
 ---
