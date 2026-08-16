@@ -1,0 +1,9 @@
+nome,descricao,sku,preco,preco_promocional,estoque,tamanho,cor,peso,marca,categorias,tags,imagens
+Camiseta Oversized Signature,"Malha pesada 240g, modelagem oversized, estampa em silk de alta densidade.",BVBA-CAM-SIG-P,199.90,,12,P,Preto,0.35,BVBA,Camisetas|Drop 01,drop01|oversized,https://exemplo.com/cam-sig-1.jpg|https://exemplo.com/cam-sig-2.jpg
+Camiseta Oversized Signature,,BVBA-CAM-SIG-M,199.90,,25,M,Preto,0.38,BVBA,,,
+Camiseta Oversized Signature,,BVBA-CAM-SIG-G,199.90,,25,G,Preto,0.41,BVBA,,,
+Camiseta Oversized Signature,,BVBA-CAM-SIG-GG,199.90,,10,GG,Preto,0.44,BVBA,,,
+Calca Cargo Tactical,"Sarja com elastano, seis bolsos, ajuste no tornozelo.",BVBA-CAL-CAR-38,349.90,299.90,8,38,Verde Militar,0.72,BVBA,Calcas|Drop 01,drop01|cargo,imagens/cargo-frente.png|imagens/cargo-costas.png
+Calca Cargo Tactical,,BVBA-CAL-CAR-40,349.90,299.90,10,40,Verde Militar,0.75,BVBA,,,
+Calca Cargo Tactical,,BVBA-CAL-CAR-42,349.90,299.90,6,42,Verde Militar,0.78,BVBA,,,
+Bone Trucker Logo,"Bone trucker com tela respiravel e logo bordado em relevo.",BVBA-BON-TRK-U,129.90,,40,Unico,Off White,0.15,BVBA,Acessorios|Drop 01,drop01|bone,https://exemplo.com/bone-1.jpg

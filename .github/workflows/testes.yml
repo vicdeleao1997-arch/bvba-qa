@@ -2,25 +2,41 @@ name: Testes
 
 on:
   push:
-    branches: ['**']
+    branches: ["**"]
   pull_request:
 
 jobs:
   testes:
-    name: Sincronia do vault
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        # 3.9 e o piso: o agente usa zoneinfo, que entrou nessa versao.
+        python-version: ["3.9", "3.11", "3.13"]
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Instalar shellcheck
-        run: sudo apt-get update -qq && sudo apt-get install -y shellcheck
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
 
-      # Os testes de sincronia criam commits em repositórios temporários.
-      - name: Configurar identidade do git
+      - name: Testes unitarios
+        run: python -m unittest discover -s testes -t . -v
+
+      - name: Validar o catalogo de exemplo
+        run: python -m agente_drop validar --catalogo catalogo/exemplo-drop.csv
+
+      - name: Ensaio completo contra a loja falsa
         run: |
-          git config --global user.name  "CI"
-          git config --global user.email "ci@bvba-qa.local"
-
-      - name: Rodar a bateria completa
-        run: ./scripts/testes/rodar.sh
+          python ferramentas/loja_falsa.py &
+          sleep 3
+          export NUVEMSHOP_API_BASE=http://localhost:8799
+          export NUVEMSHOP_STORE_ID=123456
+          export NUVEMSHOP_ACCESS_TOKEN=ensaio
+          export NUVEMSHOP_USER_AGENT="CI (qa@bvba.com.br)"
+          python -m agente_drop conferir
+          python -m agente_drop subir --catalogo catalogo/exemplo-drop.csv \
+            --estado /tmp/ci.json --relatorios /tmp/rel --aplicar
+          python -m agente_drop status --estado /tmp/ci.json
+          python -m agente_drop publicar --estado /tmp/ci.json --agora
+          python -m agente_drop despublicar --estado /tmp/ci.json --sim

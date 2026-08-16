@@ -224,8 +224,42 @@ resolve_conflicts() {
   log INFO "${count} conflito(s) resolvido(s) sem perda de conteúdo"
 }
 
+# Defesa de dados pessoais.
+#
+# Este repositório guarda material da marca, e a sincronia commita sozinha a
+# cada poucos minutos — ninguém revisa antes de subir. O .gitignore já bloqueia
+# os padrões conhecidos, mas ele é um arquivo como outro qualquer: pode ser
+# editado, e um arquivo que já entrou no índice antes continua sendo rastreado.
+# Então conferimos de novo aqui, imediatamente antes do commit.
+#
+# Encontrando algo suspeito: tira SÓ aquele arquivo do commit e deixa o resto
+# sincronizar. Abortar o ciclo inteiro faria a sincronia morrer em silêncio até
+# alguém perceber; isso seria pior.
+PADRAO_SENSIVEL='(telefone|contatos|clientes|publico-personalizado|e164|auditoria)[^/]*\.csv$|\.(pem|key|pfx|p12)$|(^|/)\.env($|\.)'
+
+remover_sensiveis_do_commit() {
+  local suspeitos
+  suspeitos="$(git_v diff --cached --name-only \
+    | grep -Ei "${PADRAO_SENSIVEL}" \
+    | grep -v '\.env\.exemplo$' || true)"
+  [ -n "${suspeitos}" ] || return 0
+
+  while IFS= read -r arquivo; do
+    [ -n "${arquivo}" ] || continue
+    git_v restore --staged -- "${arquivo}" 2>/dev/null \
+      || git_v reset -q HEAD -- "${arquivo}" 2>/dev/null || true
+    log ERRO "arquivo sensível retirado do commit: '${arquivo}' — NÃO foi enviado ao GitHub"
+    # Vai para o stderr mesmo em modo silencioso, para o agendador registrar.
+    printf 'ATENÇÃO: %s parece conter dados pessoais ou credenciais e foi mantido fora da sincronia.\n' \
+      "${arquivo}" >&2
+  done <<<"${suspeitos}"
+
+  log AVISO "tire esses arquivos da pasta do vault — o lugar deles não é o repositório"
+}
+
 commit_local_changes() {
   git_v add -A
+  remover_sensiveis_do_commit
   if git_v diff --cached --quiet; then
     return 1   # nada para commitar
   fi

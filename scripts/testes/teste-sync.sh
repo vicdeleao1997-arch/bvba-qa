@@ -194,7 +194,44 @@ if [ -f "$BASE/pcB/Reunião de Diretoria — 2026.md" ]; then ok "acentos e espa
 else bad "nome com acento quebrou"; fi
 
 # --------------------------------------------------------------------------
-head_ "11. --status nao altera nada"
+head_ "11. Dados pessoais e credenciais NAO sobem, mesmo sem .gitignore"
+# O repositorio de teste nao tem .gitignore: e exatamente o cenario em que a
+# defesa no sync.sh e a unica coisa entre o dado pessoal e o GitHub.
+printf 'nome,telefone\nfulano,+5511999999999\n' >"$BASE/pcA/contatos-clientes.csv"
+printf 'nome;fone\nbeltrano;+5511888888888\n' >"$BASE/pcA/base-telefone-2026.csv"
+printf -- '-----BEGIN PRIVATE KEY-----\nabc\n' >"$BASE/pcA/deploy.pem"
+printf 'TOKEN=segredo123\n' >"$BASE/pcA/.env"
+printf 'TOKEN=troque-aqui\n' >"$BASE/pcA/.env.exemplo"   # este PODE subir
+printf '# nota comum\n' >"$BASE/pcA/Nota comum.md"
+sync_as pcA 2>/dev/null; sync_as pcB
+
+vazou=0
+for f in contatos-clientes.csv base-telefone-2026.csv deploy.pem .env; do
+  if [ -e "$BASE/pcB/$f" ] || git -C "$BASE/pcA" ls-files --error-unmatch "$f" >/dev/null 2>&1; then
+    bad "VAZOU para o GitHub: $f"; vazou=1
+  fi
+done
+[ "$vazou" -eq 0 ] && ok "contatos, telefones, .pem e .env ficaram fora da sincronia"
+
+if [ -f "$BASE/pcB/Nota comum.md" ]; then
+  ok "o resto sincronizou normalmente (a defesa nao mata o ciclo)"
+else
+  bad "a defesa bloqueou a sincronia inteira em vez de so o arquivo suspeito"
+fi
+if [ -f "$BASE/pcB/.env.exemplo" ]; then
+  ok ".env.exemplo (modelo sem segredo) continua subindo"
+else
+  bad ".env.exemplo foi bloqueado por engano"
+fi
+
+# O arquivo suspeito continua no disco de quem escreveu — so nao e versionado.
+if [ -f "$BASE/pcA/contatos-clientes.csv" ]; then
+  ok "o arquivo continua no disco local (nada foi apagado)"
+else
+  bad "a defesa APAGOU o arquivo do usuario"
+fi
+
+head_ "12. --status nao altera nada"
 before="$(git -C "$BASE/pcA" rev-parse HEAD)"
 "$BASE/pcA/scripts/sync.sh" --status >/dev/null 2>&1 || true
 after="$(git -C "$BASE/pcA" rev-parse HEAD)"

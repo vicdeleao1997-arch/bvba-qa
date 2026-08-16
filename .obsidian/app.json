@@ -20,8 +20,11 @@
     "en-US"
   ],
   "userIgnoreFilters": [
+    "agente_drop/",
+    "testes/",
+    "ferramentas/",
     "scripts/",
-    ".github/",
-    "README.md"
+    "relatorios/",
+    ".github/"
   ]
 }

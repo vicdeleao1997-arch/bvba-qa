@@ -1,9 +1,53 @@
+# ===========================================================================
+# ATENÇÃO: este repositório tem sincronia automática ligada (scripts/sync.sh
+# roda `git add -A` a cada poucos minutos). Tudo que não estiver ignorado
+# aqui sobe para o GitHub SOZINHO, sem ninguém revisar. As regras de dados
+# pessoais abaixo não são opcionais.
+# ===========================================================================
+
+# Dados pessoais de clientes — NUNCA versionar.
+# Este repositório vai para o GitHub; commitar a base de contatos seria
+# vazamento de dados. Os arquivos de público personalizado e a base de
+# telefones ficam apenas no Google Drive da marca.
+*telefone*.csv
+*contatos*.csv
+*clientes*.csv
+*publico-personalizado*.csv
+*E164*.csv
+*auditoria*.csv
+
+# Credenciais e certificados
+*.pfx
+*.p12
+*.pem
+*.key
+.env
+.env.*
+# ...menos o modelo sem segredo do agente de drop, que precisa ser versionado
+# para o `cp .env.exemplo .env` da instalação funcionar.
+!.env.exemplo
+
+# Relatorios gerados a cada execucao do agente de drop
+relatorios/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+
+# Nao ignoramos de proposito:
+#   .estado_drop.json  -> precisa estar versionado para a publicacao agendada
+#                         das 20h saber quais produtos publicar (so IDs, nada secreto)
+#   imagens/           -> as fotos do drop ficam no repo junto do catalogo
+
 # ---------------------------------------------------------------------------
-# Vault Obsidian — bvba-qa
+# Vault Obsidian
 #
-# Regra geral: TUDO que é conteúdo e configuração compartilhada entra no git.
-# Só fica de fora o que é específico da máquina (layout de janela, cache) ou
-# binário de plugin (baixado pelo instalador, não versionado).
+# O conteúdo e a configuração compartilhada do vault entram no git. Fica de
+# fora o que é específico de cada máquina (layout de janela, cache) e os
+# binários de plugin, que o instalador baixa da release oficial.
 # ---------------------------------------------------------------------------
 
 # --- Estado local do Obsidian (específico de cada máquina) ---
@@ -17,7 +61,6 @@
 .trash/
 
 # --- Binários de plugins da comunidade ---
-# O instalador baixa esses arquivos da release oficial do plugin.
 # A CONFIGURAÇÃO (data.json) continua versionada — é o que sincroniza ajustes.
 .obsidian/plugins/*/main.js
 .obsidian/plugins/*/styles.css
