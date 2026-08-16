@@ -237,11 +237,61 @@ resolve_conflicts() {
 # alguém perceber; isso seria pior.
 PADRAO_SENSIVEL='(telefone|contatos|clientes|publico-personalizado|e164|auditoria)[^/]*\.csv$|\.(pem|key|pfx|p12)$|(^|/)\.env($|\.)'
 
+# Segunda camada: o nome do arquivo pode não denunciar nada, e este repositório
+# é PÚBLICO — um deslize é irreversível, o GitHub indexa antes de alguém
+# perceber. Então olhamos também o conteúdo, mas SÓ atrás de bloco de chave
+# privada.
+#
+# Tentamos ir além disso (contar telefones, achar SENHA=... atribuída) e
+# medimos o resultado contra o conteúdo real do repositório: deu falso positivo
+# em README-agente-drop.md e em plano-360/07-fontes-e-proveniencia.md, que
+# apenas documentam variáveis de ambiente e citam números. Falso positivo aqui
+# não é barulho: o arquivo para de sincronizar caladamente, que é exatamente o
+# defeito que este projeto existe para não ter. Bloco de chave privada é o
+# único padrão que mediu zero falso positivo.
+#
+# Para varredura de credencial de verdade, o lugar certo é o Secret Scanning do
+# próprio GitHub (Settings > Code security), que roda no push e entende os
+# formatos de token de cada provedor.
+conteudo_sensivel() {
+  local caminho="$1" arquivo="${VAULT_DIR}/$1" tamanho
+
+  [ -f "${arquivo}" ] || return 1
+  case "${caminho}" in
+    # scripts/ é código revisado por PR, não nota de usuário — e é onde este
+    # próprio padrão está escrito, o que faria o arquivo se auto-denunciar.
+    scripts/*|*.exemplo|*.example|*.sample) return 1 ;;
+  esac
+
+  tamanho="$(wc -c <"${arquivo}" 2>/dev/null || echo 0)"
+  [ "${tamanho}" -le 5242880 ] || return 1        # arquivo grande: não varre
+  grep -Iq . "${arquivo}" 2>/dev/null || return 1 # binário: não varre
+
+  if grep -qE -- '-----BEGIN [A-Z ]*PRIVATE KEY-----' "${arquivo}" 2>/dev/null; then
+    printf 'contém um bloco de chave privada'
+    return 0
+  fi
+
+  return 1
+}
+
 remover_sensiveis_do_commit() {
-  local suspeitos
-  suspeitos="$(git_v diff --cached --name-only \
+  local suspeitos por_nome por_conteudo arquivo motivo
+
+  por_nome="$(git_v diff --cached --name-only \
     | grep -Ei "${PADRAO_SENSIVEL}" \
     | grep -v '\.env\.exemplo$' || true)"
+
+  por_conteudo=""
+  while IFS= read -r arquivo; do
+    [ -n "${arquivo}" ] || continue
+    if motivo="$(conteudo_sensivel "${arquivo}")"; then
+      por_conteudo="${por_conteudo}${arquivo}"$'\n'
+      log ERRO "'${arquivo}' ${motivo}"
+    fi
+  done < <(git_v diff --cached --name-only)
+
+  suspeitos="$(printf '%s\n%s' "${por_nome}" "${por_conteudo}" | grep -v '^$' | sort -u || true)"
   [ -n "${suspeitos}" ] || return 0
 
   while IFS= read -r arquivo; do

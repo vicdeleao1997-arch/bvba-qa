@@ -22,10 +22,13 @@ sync_as() { local pc="$1"; shift
   PATH="$bin:$PATH" "$BASE/$pc/scripts/sync.sh" --quiet "$@"; }
 
 git init -q --bare -b main "$BASE/origin.git"
-# git archive em vez de git clone: funciona mesmo com HEAD destacado, que e
-# exatamente o estado deixado pelo actions/checkout no CI.
+# Copia os arquivos versionados a partir da ARVORE DE TRABALHO (nao de HEAD):
+# assim, mexer em scripts/sync.sh e rodar o teste avalia a mudanca de verdade.
+# Com `git archive HEAD` o teste avaliaria a versao commitada e passaria a
+# mentir durante o desenvolvimento. Tambem funciona com HEAD destacado, que e
+# o estado deixado pelo actions/checkout no CI.
 mkdir -p "$BASE/seed"
-git -C "$REPO" archive HEAD | tar -x -C "$BASE/seed"
+( cd "$REPO" && git ls-files -z | tar --null -T - -cf - ) | tar -x -C "$BASE/seed"
 git -C "$BASE/seed" init -q -b main
 git -C "$BASE/seed" config user.name seed; git -C "$BASE/seed" config user.email seed@t.local
 git -C "$BASE/seed" add -A; git -C "$BASE/seed" commit -qm "vault"
@@ -100,6 +103,37 @@ if [ -n "$copia" ] && grep -q 'adicao do pcB' "$copia" \
    && grep -q 'adicao do pcA' "$BASE/pcA/00 - Inbox/Ata.md"; then
   ok "as duas versoes sobreviveram: $(basename "$copia")"
 else bad "perda de conteudo no conflito"; fi
+
+sec "Defesa de dados no conteudo real do repositorio"
+# Falso positivo aqui nao e barulho: o arquivo para de sincronizar caladamente.
+# Esta assercao existe para que ninguem endureca a heuristica sem medir o custo.
+VAULT_DIR="$BASE/pcA" eval "$(awk '/^conteudo_sensivel\(\) \{/,/^\}/' "$REPO/scripts/sync.sh")"
+fp=0
+while IFS= read -r f; do
+  if VAULT_DIR="$BASE/pcA" conteudo_sensivel "$f" >/dev/null 2>&1; then
+    bad "falso positivo em arquivo legitimo: $f"; fp=$((fp+1))
+  fi
+done < <(git -C "$BASE/pcA" ls-files)
+n_arquivos="$(git -C "$BASE/pcA" ls-files | wc -l)"
+if [ "$n_arquivos" -lt 20 ]; then
+  bad "so $n_arquivos arquivos versionados — a varredura passaria por vacuidade"
+elif [ "$fp" -eq 0 ]; then
+  ok "zero falso positivo em $n_arquivos arquivos versionados"
+fi
+
+printf '# nota\n\n-----BEGIN RSA PRIVATE KEY-----\nMIIEow...\n' >"$BASE/pcA/00 - Inbox/chave.md"
+if VAULT_DIR="$BASE/pcA" conteudo_sensivel "00 - Inbox/chave.md" >/dev/null 2>&1; then
+  ok "chave privada colada numa nota e detectada"
+else
+  bad "chave privada colada numa nota passou batido"
+fi
+sync_as pcA 2>/dev/null; sync_as pcB
+if [ -e "$BASE/pcB/00 - Inbox/chave.md" ]; then
+  bad "a nota com chave privada VAZOU para o outro PC"
+else
+  ok "a nota com chave privada nao subiu"
+fi
+rm -f "$BASE/pcA/00 - Inbox/chave.md"; sync_as pcA 2>/dev/null
 
 sec "Convergencia final"
 sync_as pcA; sync_as pcB; sync_as pcA; sync_as pcB
