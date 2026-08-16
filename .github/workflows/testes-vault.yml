@@ -1,0 +1,43 @@
+name: Testes do vault
+
+# Separado de testes.yml de proposito: aquele roda os testes Python do agente
+# de drop, este roda o motor de sincronia do vault Obsidian. Projetos
+# diferentes, ferramentas diferentes — juntar os dois num arquivo so faria uma
+# falha de shell script mascarar o resultado dos testes do agente.
+
+on:
+  push:
+    branches: ["**"]
+    paths:
+      - "scripts/**"
+      - ".obsidian/**"
+      - ".gitignore"
+      - ".gitattributes"
+      - ".github/workflows/testes-vault.yml"
+  pull_request:
+    paths:
+      - "scripts/**"
+      - ".obsidian/**"
+      - ".gitignore"
+      - ".gitattributes"
+      - ".github/workflows/testes-vault.yml"
+
+jobs:
+  vault:
+    name: Sincronia do vault
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Instalar shellcheck
+        run: sudo apt-get update -qq && sudo apt-get install -y shellcheck
+
+      # Os testes de sincronia criam commits em repositórios temporários.
+      - name: Configurar identidade do git
+        run: |
+          git config --global user.name  "CI"
+          git config --global user.email "ci@bvba-qa.local"
+
+      - name: Rodar a bateria completa
+        run: ./scripts/testes/rodar.sh

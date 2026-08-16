@@ -1,9 +1,14 @@
 # BVBA Supply® — contexto de trabalho
 
-Repositório da **BVBA Supply®**, marca brasileira de streetwear. Reúne quatro projetos:
+Repositório da **BVBA Supply®**, marca brasileira de streetwear. Reúne cinco projetos:
 o **agente de drop da Nuvemshop** (código Python, em `agente_drop/`), o **planejamento de
-marketing** (documentação operacional), a **auditoria das imagens de e-commerce** e uma
-**pesquisa de mercado** independente. O índice de tudo está no [`README.md`](README.md).
+marketing** (documentação operacional), a **auditoria das imagens de e-commerce**, uma
+**pesquisa de mercado** independente e o **agente de imigração canadense**
+(`imigracao-canada/`, também independente da marca). O índice de tudo está no
+[`README.md`](README.md).
+
+A pasta clonada é, ao mesmo tempo, um **vault do Obsidian** sincronizado entre as duas
+máquinas — ver [`SINCRONIA-OBSIDIAN.md`](SINCRONIA-OBSIDIAN.md).
 
 > ## 📍 O plano atual é [`PLANO.md`](PLANO.md)
 >
@@ -22,7 +27,7 @@ marketing** (documentação operacional), a **auditoria das imagens de e-commerc
 
 Motivo concreto, já verificado: o ambiente remoto tem política de egresso "negar tudo". O gateway responde `403 Forbidden` no CONNECT para `api.nuvemshop.com.br`, `graph.facebook.com`, `drive.google.com` e até `example.com`. Sessão remota **não alcança** o painel da Nuvemshop nem o Gerenciador de Anúncios da Meta, e nenhuma permissão de conta contorna isso — o bloqueio é anterior à credencial.
 
-| | Sessão local (Mac) | Sessão remota (nuvem) |
+| | Sessão local (MacBook ou desktop Win11) | Sessão remota (nuvem) |
 |---|---|---|
 | Nuvemshop, Meta Ads | ✅ | ❌ egresso 403 |
 | Site bvbasupply.com.br | ✅ | ❌ egresso 403 |
@@ -30,17 +35,45 @@ Motivo concreto, já verificado: o ambiente remoto tem política de egresso "neg
 | Drive, Gmail, Calendar | ✅ | ✅ (via MCP, autentica no servidor) |
 | GitHub | ✅ | ✅ |
 
-Como iniciar na máquina:
+Como iniciar, em qualquer uma das duas máquinas:
 
 ```bash
 git clone https://github.com/vicdeleao1997-arch/bvba-qa.git
 cd bvba-qa
-git checkout claude/trazer-projetos-pc-0vlyki
 claude
 ```
 
-Essa branch é a consolidada: traz os quatro projetos de uma vez. As branches
-originais de cada um continuam existindo, intactas.
+O `main` já traz os cinco projetos — não existe branch a lembrar.
+
+### As duas máquinas ficam em sincronia sozinhas
+
+MacBook e desktop Windows 11 rodam a mesma rotina de sincronia a cada 5
+minutos pelo GitHub com o Obsidian fechado, e a cada 2 minutos com ele aberto. A pasta clonada também
+é o vault do Obsidian. Ligar é uma vez por máquina:
+
+```bash
+./scripts/instalar.sh             # MacBook (e Linux/WSL)
+```
+```powershell
+.\scripts\instalar.ps1            # desktop Windows 11
+```
+
+Manual, travas de segurança e diagnóstico: [`SINCRONIA-OBSIDIAN.md`](SINCRONIA-OBSIDIAN.md).
+Estado a qualquer momento: `./scripts/sync.sh --status`.
+
+**O que isso significa ao trabalhar:** o que você fizer numa máquina aparece na
+outra em poucos minutos, sem pedir. Três consequências que valem lembrar antes
+de editar:
+
+- **Conflito não sobrescreve.** Se a mesma nota mudou nos dois PCs, a versão
+  remota fica com o nome original e a sua vira `Nota (conflito <pc> <data>).md`
+  ao lado — as duas sobrevivem, você decide depois.
+- **Código quebrado não viaja.** Mexeu em `agente_drop/`, `testes/`,
+  `ferramentas/` ou `.github/`, os 156 testes rodam antes do envio. Falharam, o
+  trabalho fica commitado na máquina e `.sync/TESTES-FALHARAM.txt` explica —
+  mas não sobe.
+- **Commit é automático.** A sincronia commita sozinha o que estiver na pasta.
+  É exatamente por isso que a regra nº 3 abaixo existe e é levada a sério.
 
 Se uma sessão remota for inevitável, ela ainda serve para Drive, Gmail, Calendar, GitHub e redação — mas **deve dizer explicitamente** o que não conseguiu verificar, em vez de assumir.
 
@@ -82,7 +115,7 @@ O plano de lançamento de 02/08 registra que 8 pedidos seriam *"mais que o trime
 
 1. **Política de IA em imagem:** *"peça real, nunca regenerada; só o ambiente é gerado por IA."* Nunca gere uma imagem que finja ser a peça — a cliente receberia algo diferente do anunciado. Cenário e fundo, sim; produto, não.
 2. **Desconto:** ou o item é bônus (100% off como add-on), ou é 50%+ em evento fechado. Desconto de 10–20% na vitrine pública só corta margem de quem já ia comprar e destrói o preço de referência.
-3. **Dados de cliente nunca entram no Git.** A base de telefones e qualquer export de pedidos ficam só no Drive — este repositório é publicado no GitHub. O `.gitignore` bloqueia os padrões, mas confira antes de commitar.
+3. **Dados de cliente nunca entram no Git.** A base de telefones e qualquer export de pedidos ficam só no Drive — este repositório é publicado no GitHub, e a sincronia commita sozinha, sem ninguém revisar. Há dois cadeados: o `.gitignore` bloqueia os padrões por nome, e antes de cada commit a sincronia confere **nome e conteúdo** dos arquivos — o que tiver cara de base de contatos ou credencial é retirado do commit (pega até `git add -f`), registrado no log, e o resto sincroniza normalmente. Dois cadeados não dispensam olhar antes de commitar: o lugar da base de clientes é o Drive, não esta pasta.
 4. **Não fragmentar mídia.** Com R$30/dia, uma campanha e um conjunto. Dividir em três impede que qualquer um saia do aprendizado.
 
 ---
