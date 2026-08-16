@@ -4,13 +4,14 @@ Todos os projetos da marca num lugar só. Um `git clone` traz o repositório
 inteiro — não existe mais branch escondida com metade do trabalho.
 
 As duas máquinas (MacBook e desktop Windows 11) ficam **em sincronia sozinhas**,
-a cada 15 minutos, pelo GitHub. Como ligar isso está em
-[`sinc/README.md`](sinc/README.md).
+a cada 5 minutos, pelo GitHub — e a pasta clonada abre direto no Obsidian como
+vault. Como ligar isso está em
+[`SINCRONIA-OBSIDIAN.md`](SINCRONIA-OBSIDIAN.md).
 
 ```
    MacBook  ──┐                    ┌──  Desktop Windows 11
   (launchd)   ├──►  GitHub  ◄──────┤   (Agendador de Tarefas)
-   15 em 15   ┘                    └──   15 em 15
+   5 em 5min  ┘                    └──   5 em 5min
 ```
 
 ---
@@ -27,6 +28,9 @@ a cada 15 minutos, pelo GitHub. Como ligar isso está em
 
 Contexto de marca e regras que valem para tudo: [`CLAUDE.md`](CLAUDE.md).
 Estado da última sessão de marketing: [`HANDOFF.md`](HANDOFF.md).
+
+Para abrir tudo isto como um vault Obsidian sincronizado entre PCs:
+[`SINCRONIA-OBSIDIAN.md`](SINCRONIA-OBSIDIAN.md).
 
 ---
 
@@ -71,27 +75,41 @@ Trabalho independente da BVBA, guardado aqui por conveniência.
 
 ## Sincronia entre as duas máquinas
 
-Manual completo em [`sinc/README.md`](sinc/README.md). O essencial:
+Manual completo em [`SINCRONIA-OBSIDIAN.md`](SINCRONIA-OBSIDIAN.md). O essencial —
+uma vez por máquina:
 
 ```bash
 git clone https://github.com/vicdeleao1997-arch/bvba-qa.git
 cd bvba-qa
 
-./sinc/instalar-macos.sh          # MacBook
+./scripts/instalar.sh             # MacBook (e Linux/WSL)
 ```
 ```powershell
-.\sinc\instalar-windows.ps1       # desktop Windows 11
+.\scripts\instalar.ps1            # desktop Windows 11
 ```
 
-Depois disso, nada. As duas máquinas se acertam a cada 15 minutos.
+Depois disso, nada. As duas máquinas se acertam a cada **5 minutos** com o
+Obsidian fechado, e a cada 2 minutos com ele aberto (o plugin obsidian-git
+assume o turno). Para ver o estado a qualquer momento:
+`./scripts/sync.sh --status`.
 
-Três coisas a sincronia **não** faz, de propósito: não deixa dado de cliente
-entrar no Git, não publica código com teste quebrado, e não resolve conflito
-sozinha sobrescrevendo — ela para e avisa. Nenhum `--force` existe nesse código.
+Três coisas a sincronia **não** faz, de propósito:
 
-O que fica de fora: cofre do Obsidian, fotos do Drive, base de telefones e o
-`.env` de cada máquina. Isso é escolha, não esquecimento — a tabela em
-[`sinc/README.md`](sinc/README.md) diz quem cuida de cada um.
+- **não deixa dado de cliente entrar no Git** — antes de cada commit ela confere
+  nome e conteúdo dos arquivos; o que tiver cara de base de contatos ou
+  credencial sai do commit, e o resto sincroniza normalmente;
+- **não publica código com teste quebrado** — se os commits tocam
+  `agente_drop/`, `testes/`, `ferramentas/` ou `.github/`, os 156 testes rodam
+  antes do envio. Falharam, o trabalho fica commitado aqui (nada se perde) mas
+  não sobe;
+- **não sobrescreve na hora do conflito** — se a mesma nota mudou nos dois PCs,
+  a versão remota fica com o nome original e a sua vira uma cópia
+  `Nota (conflito <pc> <data>).md` ao lado. Você decide depois. Nenhum `--force`
+  existe nesse código.
+
+O que fica de fora: fotos do Drive, base de telefones e o `.env` de cada
+máquina. Isso é escolha, não esquecimento — a tabela em
+[`SINCRONIA-OBSIDIAN.md`](SINCRONIA-OBSIDIAN.md) diz quem cuida de cada um.
 
 ---
 

@@ -1,0 +1,9 @@
+{
+  "accentColor": "#5b6ef5",
+  "theme": "obsidian",
+  "baseFontSize": 16,
+  "translucency": false,
+  "nativeMenus": false,
+  "showInlineTitle": true,
+  "showViewHeader": true
+}

@@ -2,28 +2,45 @@
 #
 # Sem isto, o Windows grava CRLF, o Mac grava LF, e cada `git status` acusa o
 # arquivo inteiro como modificado. Duas maquinas sincronizando viram um moinho
-# de conflitos falsos. Com `text=auto eol=lf` o repositorio guarda LF sempre e
-# entrega LF nas duas maquinas — editores modernos (VS Code, Obsidian, Excel,
-# Bloco de Notas do Windows 11) leem LF sem reclamar.
+# de conflitos falsos — e numa sincronia automatica, que commita sozinha, isso
+# vira commit de ruido a cada 15 minutos. Com `text=auto eol=lf` o repositorio
+# guarda LF sempre e entrega LF nas duas maquinas; editores modernos (VS Code,
+# Obsidian, Excel, Bloco de Notas do Windows 11) leem LF sem reclamar.
 * text=auto eol=lf
 
+# Tipos de texto declarados explicitamente, para o git nunca adivinhar errado.
+*.md      text eol=lf diff=markdown
+*.canvas  text eol=lf
+*.json    text eol=lf
+*.css     text eol=lf
+*.sh      text eol=lf
+*.csv     text eol=lf
+*.py      text eol=lf diff=python
+
 # As excecoes que realmente precisam de CRLF para o Windows executar.
+*.ps1 text eol=crlf
 *.bat text eol=crlf
 *.cmd text eol=crlf
-*.ps1 text eol=crlf
 
-# Binarios — nunca normalizar, ou a foto corrompe.
-*.png binary
-*.jpg binary
+# Binarios e anexos — nunca normalizar, e o git nunca tentar fazer merge neles.
+*.png  binary
+*.jpg  binary
 *.jpeg binary
-*.gif binary
+*.gif  binary
 *.webp binary
-*.pdf binary
-*.zip binary
-*.ico binary
+*.svg  binary
+*.ico  binary
+*.pdf  binary
+*.mp3  binary
+*.wav  binary
+*.m4a  binary
+*.mp4  binary
+*.mov  binary
+*.zip  binary
+*.xlsx binary
+*.docx binary
+*.pptx binary
 *.woff binary
 *.woff2 binary
-*.psd binary
-*.ai binary
-*.mp4 binary
-*.mov binary
+*.psd  binary
+*.ai   binary

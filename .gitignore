@@ -1,3 +1,10 @@
+# ===========================================================================
+# ATENÇÃO: este repositório tem sincronia automática ligada (scripts/sync.sh
+# roda `git add -A` a cada poucos minutos). Tudo que não estiver ignorado
+# aqui sobe para o GitHub SOZINHO, sem ninguém revisar. As regras de dados
+# pessoais abaixo não são opcionais.
+# ===========================================================================
+
 # Dados pessoais de clientes — NUNCA versionar.
 # Este repositório vai para o GitHub; commitar a base de contatos seria
 # vazamento de dados. Os arquivos de público personalizado e a base de
@@ -41,15 +48,56 @@ __pycache__/
 venv/
 .pytest_cache/
 
-# Sistema
-.DS_Store
-Thumbs.db
-desktop.ini
-
-# Log e trava da sincronia — local de cada maquina, nunca versionar
-sinc/.log/
-
 # Nao ignoramos de proposito:
 #   .estado_drop.json  -> precisa estar versionado para a publicacao agendada
 #                         das 20h saber quais produtos publicar (so IDs, nada secreto)
 #   imagens/           -> as fotos do drop ficam no repo junto do catalogo
+
+# ---------------------------------------------------------------------------
+# Vault Obsidian
+#
+# O conteúdo e a configuração compartilhada do vault entram no git. Fica de
+# fora o que é específico de cada máquina (layout de janela, cache) e os
+# binários de plugin, que o instalador baixa da release oficial.
+# ---------------------------------------------------------------------------
+
+# --- Estado local do Obsidian (específico de cada máquina) ---
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.obsidian/graph.json
+.obsidian/cache
+.obsidian/plugins/*/data.json.bak
+
+# --- Lixeira do Obsidian ---
+.trash/
+
+# --- Binários de plugins da comunidade ---
+# A CONFIGURAÇÃO (data.json) continua versionada — é o que sincroniza ajustes.
+.obsidian/plugins/*/main.js
+.obsidian/plugins/*/styles.css
+.obsidian/plugins/*/manifest.json
+.obsidian/plugins/*/.hotreload
+
+# --- Temas da comunidade (baixados pelo Obsidian) ---
+.obsidian/themes/
+
+# --- Estado local dos scripts de sincronia ---
+.sync/
+*.sync.log
+
+# --- Sistema operacional ---
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
+desktop.ini
+$RECYCLE.BIN/
+
+# --- Editores ---
+.idea/
+.vscode/
+*.swp
+*~

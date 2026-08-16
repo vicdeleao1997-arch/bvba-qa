@@ -1,9 +1,14 @@
 # BVBA Supply® — contexto de trabalho
 
-Repositório da **BVBA Supply®**, marca brasileira de streetwear. Reúne quatro projetos:
+Repositório da **BVBA Supply®**, marca brasileira de streetwear. Reúne cinco projetos:
 o **agente de drop da Nuvemshop** (código Python, em `agente_drop/`), o **planejamento de
-marketing** (documentação operacional), a **auditoria das imagens de e-commerce** e uma
-**pesquisa de mercado** independente. O índice de tudo está no [`README.md`](README.md).
+marketing** (documentação operacional), a **auditoria das imagens de e-commerce**, uma
+**pesquisa de mercado** independente e o **agente de imigração canadense**
+(`imigracao-canada/`, também independente da marca). O índice de tudo está no
+[`README.md`](README.md).
+
+A pasta clonada é, ao mesmo tempo, um **vault do Obsidian** sincronizado entre as duas
+máquinas — ver [`SINCRONIA-OBSIDIAN.md`](SINCRONIA-OBSIDIAN.md).
 
 > ## 📍 O plano atual é [`PLANO.md`](PLANO.md)
 >
@@ -38,28 +43,37 @@ cd bvba-qa
 claude
 ```
 
-O `main` já traz os quatro projetos — não existe branch a lembrar.
+O `main` já traz os cinco projetos — não existe branch a lembrar.
 
 ### As duas máquinas ficam em sincronia sozinhas
 
-MacBook e desktop Windows 11 rodam a mesma rotina de sincronia a cada 15
-minutos, pelo GitHub. Ligar é uma vez por máquina:
+MacBook e desktop Windows 11 rodam a mesma rotina de sincronia a cada 5
+minutos pelo GitHub com o Obsidian fechado, e a cada 2 minutos com ele aberto. A pasta clonada também
+é o vault do Obsidian. Ligar é uma vez por máquina:
 
 ```bash
-./sinc/instalar-macos.sh          # MacBook
+./scripts/instalar.sh             # MacBook (e Linux/WSL)
 ```
 ```powershell
-.\sinc\instalar-windows.ps1       # desktop Windows 11
+.\scripts\instalar.ps1            # desktop Windows 11
 ```
 
-Manual, travas de segurança e diagnóstico: [`sinc/README.md`](sinc/README.md).
+Manual, travas de segurança e diagnóstico: [`SINCRONIA-OBSIDIAN.md`](SINCRONIA-OBSIDIAN.md).
+Estado a qualquer momento: `./scripts/sync.sh --status`.
 
 **O que isso significa ao trabalhar:** o que você fizer numa máquina aparece na
-outra em até 15 minutos, sem pedir. Se você e a outra máquina editarem as mesmas
-linhas do mesmo arquivo, a sincronia **para e avisa** em vez de sobrescrever —
-`sinc/.log/PROBLEMA.txt` conta o que houve. E se o código dos testes quebrar, o
-envio é segurado até passar: o trabalho fica salvo local, mas não contamina a
-outra máquina.
+outra em poucos minutos, sem pedir. Três consequências que valem lembrar antes
+de editar:
+
+- **Conflito não sobrescreve.** Se a mesma nota mudou nos dois PCs, a versão
+  remota fica com o nome original e a sua vira `Nota (conflito <pc> <data>).md`
+  ao lado — as duas sobrevivem, você decide depois.
+- **Código quebrado não viaja.** Mexeu em `agente_drop/`, `testes/`,
+  `ferramentas/` ou `.github/`, os 156 testes rodam antes do envio. Falharam, o
+  trabalho fica commitado na máquina e `.sync/TESTES-FALHARAM.txt` explica —
+  mas não sobe.
+- **Commit é automático.** A sincronia commita sozinha o que estiver na pasta.
+  É exatamente por isso que a regra nº 3 abaixo existe e é levada a sério.
 
 Se uma sessão remota for inevitável, ela ainda serve para Drive, Gmail, Calendar, GitHub e redação — mas **deve dizer explicitamente** o que não conseguiu verificar, em vez de assumir.
 
@@ -101,7 +115,7 @@ O plano de lançamento de 02/08 registra que 8 pedidos seriam *"mais que o trime
 
 1. **Política de IA em imagem:** *"peça real, nunca regenerada; só o ambiente é gerado por IA."* Nunca gere uma imagem que finja ser a peça — a cliente receberia algo diferente do anunciado. Cenário e fundo, sim; produto, não.
 2. **Desconto:** ou o item é bônus (100% off como add-on), ou é 50%+ em evento fechado. Desconto de 10–20% na vitrine pública só corta margem de quem já ia comprar e destrói o preço de referência.
-3. **Dados de cliente nunca entram no Git.** A base de telefones e qualquer export de pedidos ficam só no Drive — este repositório é publicado no GitHub. Há dois cadeados: o `.gitignore` bloqueia os padrões, e a sincronia varre o stage antes de cada commit e **para tudo** se achar arquivo com cara de base de contatos ou credencial (pega até `git add -f`). Dois cadeados não dispensam olhar antes de commitar.
+3. **Dados de cliente nunca entram no Git.** A base de telefones e qualquer export de pedidos ficam só no Drive — este repositório é publicado no GitHub, e a sincronia commita sozinha, sem ninguém revisar. Há dois cadeados: o `.gitignore` bloqueia os padrões por nome, e antes de cada commit a sincronia confere **nome e conteúdo** dos arquivos — o que tiver cara de base de contatos ou credencial é retirado do commit (pega até `git add -f`), registrado no log, e o resto sincroniza normalmente. Dois cadeados não dispensam olhar antes de commitar: o lugar da base de clientes é o Drive, não esta pasta.
 4. **Não fragmentar mídia.** Com R$30/dia, uma campanha e um conjunto. Dividir em três impede que qualquer um saia do aprendizado.
 
 ---

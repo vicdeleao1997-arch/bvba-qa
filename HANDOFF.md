@@ -2,7 +2,7 @@
 
 Fechamento da sessão remota de **11/08/2026**. Este documento existe para a próxima sessão local começar produzindo, sem redescobrir nada.
 
-> **Atualizado em 16/08/2026.** O que este handoff descrevia como "a branch do plano" agora está no `main`, junto com os outros três projetos ([#5](https://github.com/vicdeleao1997-arch/bvba-qa/pull/5)). E não existe mais "a próxima sessão no Mac": o MacBook e o desktop Windows 11 ficam em sincronia sozinhos, a cada 15 minutos — ver [`sinc/README.md`](sinc/README.md).
+> **Atualizado em 16/08/2026.** O que este handoff descrevia como "a branch do plano" agora está no `main`, junto com os outros três projetos ([#5](https://github.com/vicdeleao1997-arch/bvba-qa/pull/5)). E não existe mais "a próxima sessão no Mac": o MacBook e o desktop Windows 11 ficam em sincronia sozinhos, a cada poucos minutos, e a pasta clonada abre no Obsidian como vault — ver [`SINCRONIA-OBSIDIAN.md`](SINCRONIA-OBSIDIAN.md).
 
 Leia antes: [`CLAUDE.md`](CLAUDE.md) (contexto e regras da marca) e [`plano-360/08-contexto-consolidado.md`](plano-360/08-contexto-consolidado.md) (a operação real, com precedência sobre os demais).
 
@@ -16,15 +16,15 @@ cd bvba-qa
 claude
 ```
 
-O `CLAUDE.md` carrega sozinho e o `main` já traz os quatro projetos — não há branch a lembrar. O [#4](https://github.com/vicdeleao1997-arch/bvba-qa/pull/4), que este documento citava como aberto, foi fechado depois que seu conteúdo entrou no `main`; a branch original segue intacta.
+O `CLAUDE.md` carrega sozinho e o `main` já traz os cinco projetos — não há branch a lembrar. O [#4](https://github.com/vicdeleao1997-arch/bvba-qa/pull/4), que este documento citava como aberto, foi fechado depois que seu conteúdo entrou no `main`; a branch original segue intacta.
 
 Se esta for a primeira vez nesta máquina, ligue a sincronia uma vez — depois disso ela cuida de si:
 
 ```bash
-./sinc/instalar-macos.sh          # MacBook
+./scripts/instalar.sh             # MacBook (e Linux/WSL)
 ```
 ```powershell
-.\sinc\instalar-windows.ps1       # desktop Windows 11
+.\scripts\instalar.ps1            # desktop Windows 11
 ```
 
 ---
