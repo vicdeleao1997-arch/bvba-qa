@@ -1,0 +1,27 @@
+{
+  "alwaysUpdateLinks": true,
+  "newLinkFormat": "shortest",
+  "useMarkdownLinks": false,
+  "attachmentFolderPath": "90 - Anexos",
+  "newFileLocation": "folder",
+  "newFileFolderPath": "00 - Inbox",
+  "promptDelete": false,
+  "trashOption": "local",
+  "showUnsupportedFiles": false,
+  "livePreview": true,
+  "readableLineLength": true,
+  "strictLineBreaks": false,
+  "showLineNumber": false,
+  "foldHeading": true,
+  "foldIndent": true,
+  "spellcheck": true,
+  "spellcheckLanguages": [
+    "pt-BR",
+    "en-US"
+  ],
+  "userIgnoreFilters": [
+    "scripts/",
+    ".github/",
+    "README.md"
+  ]
+}

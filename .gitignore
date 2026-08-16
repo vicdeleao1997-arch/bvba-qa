@@ -1,0 +1,49 @@
+# ---------------------------------------------------------------------------
+# Vault Obsidian — bvba-qa
+#
+# Regra geral: TUDO que é conteúdo e configuração compartilhada entra no git.
+# Só fica de fora o que é específico da máquina (layout de janela, cache) ou
+# binário de plugin (baixado pelo instalador, não versionado).
+# ---------------------------------------------------------------------------
+
+# --- Estado local do Obsidian (específico de cada máquina) ---
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.obsidian/graph.json
+.obsidian/cache
+.obsidian/plugins/*/data.json.bak
+
+# --- Lixeira do Obsidian ---
+.trash/
+
+# --- Binários de plugins da comunidade ---
+# O instalador baixa esses arquivos da release oficial do plugin.
+# A CONFIGURAÇÃO (data.json) continua versionada — é o que sincroniza ajustes.
+.obsidian/plugins/*/main.js
+.obsidian/plugins/*/styles.css
+.obsidian/plugins/*/manifest.json
+.obsidian/plugins/*/.hotreload
+
+# --- Temas da comunidade (baixados pelo Obsidian) ---
+.obsidian/themes/
+
+# --- Estado local dos scripts de sincronia ---
+.sync/
+*.sync.log
+
+# --- Sistema operacional ---
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
+desktop.ini
+$RECYCLE.BIN/
+
+# --- Editores ---
+.idea/
+.vscode/
+*.swp
+*~
