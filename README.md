@@ -24,6 +24,9 @@ reescrito. Esta branch é a soma deles.
 Contexto de marca e regras que valem para tudo: [`CLAUDE.md`](CLAUDE.md).
 Estado da última sessão de marketing: [`HANDOFF.md`](HANDOFF.md).
 
+Para abrir tudo isto como um vault Obsidian sincronizado entre PCs:
+[`SINCRONIA-OBSIDIAN.md`](SINCRONIA-OBSIDIAN.md).
+
 ---
 
 ## 1 · Agente de drop (o único que é código)

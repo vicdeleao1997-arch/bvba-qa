@@ -1,0 +1,28 @@
+# Normalização de fim de linha — evita que Windows e macOS/Linux briguem
+# a cada commit e gerem conflitos falsos em notas que ninguém editou.
+* text=auto eol=lf
+
+*.md      text eol=lf diff=markdown
+*.canvas  text eol=lf
+*.json    text eol=lf
+*.css     text eol=lf
+*.sh      text eol=lf
+*.ps1     text eol=crlf
+
+# Anexos — tratados como binário para o git nunca tentar fazer merge neles.
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.gif  binary
+*.webp binary
+*.svg  binary
+*.pdf  binary
+*.mp3  binary
+*.wav  binary
+*.m4a  binary
+*.mp4  binary
+*.mov  binary
+*.zip  binary
+*.xlsx binary
+*.docx binary
+*.pptx binary
