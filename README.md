@@ -11,12 +11,13 @@ reescrito. Esta branch é a soma deles.
 
 ---
 
-## Os cinco projetos
+## Os projetos
 
 | # | Projeto | Onde está | O que é |
 |---|---|---|---|
 | 1 | **Agente de drop — Nuvemshop** | [`README-agente-drop.md`](README-agente-drop.md) · `agente_drop/` `catalogo/` `testes/` | Código Python. Sobe o drop como rascunho e publica tudo no horário. 156 testes, sem dependências. |
 | 2 | **Plano de marketing** | [`PLANO.md`](PLANO.md) · [`plano-360/`](plano-360/) | Documentação operacional. Plano v2 (mídia zerada) + os 10 documentos de apoio do plano 360. |
+| 2b | **Mídia paga — diagnóstico e plano** | [`midia-paga/`](midia-paga/) | ⭐ **18/08/2026.** Diagnóstico da conta Meta com dados lidos da API + plano de R$30/dia. Achado central: o evento `Purchase` não envia `content_ids`. |
 | 3 | **QA das imagens de e-commerce** | [`AVALIACAO_OUTPUTS_ECOMMERCE.md`](AVALIACAO_OUTPUTS_ECOMMERCE.md) | Auditoria do acervo Magnific contra a regra de IA da marca. |
 | 4 | **Pesquisa — economia prateada** | [`pesquisa/economia-prateada-negocios-50-mais.md`](pesquisa/economia-prateada-negocios-50-mais.md) | Pesquisa de mercado sobre negócios para o público 50+. Não é sobre a BVBA. |
 | 5 | **Imigração Canadá** | [`imigracao-canada/`](imigracao-canada/) · skill [`imigracao-canada`](.claude/skills/imigracao-canada/SKILL.md) | Agente sênior de imigração canadense. Base de programas, cálculo de CRS e condução do processo de PR para Ontário. Não é sobre a BVBA. |
@@ -43,14 +44,25 @@ Manual completo em [`README-agente-drop.md`](README-agente-drop.md).
 
 ## 2 · Plano de marketing
 
-Leia nesta ordem: [`PLANO.md`](PLANO.md) (o plano vigente, sem orçamento de
-mídia) → [`plano-360/08-contexto-consolidado.md`](plano-360/08-contexto-consolidado.md)
+Leia nesta ordem: [`PLANO.md`](PLANO.md) (o motor principal — crescimento por
+ativação de base) → [`midia-paga/`](midia-paga/) (a camada de mídia, religada em
+18/08/2026) → [`plano-360/08-contexto-consolidado.md`](plano-360/08-contexto-consolidado.md)
 (tem precedência onde houver conflito) →
 [`plano-360/07-fontes-e-proveniencia.md`](plano-360/07-fontes-e-proveniencia.md)
 (classifica cada número por origem).
 
 `plano-360/` é material de apoio: a copy, os scripts de WhatsApp e o
-checklist de medição seguem válidos; a arquitetura de mídia paga, não.
+checklist de medição seguem válidos; a arquitetura de mídia paga de lá, não —
+a vigente está em [`midia-paga/`](midia-paga/).
+
+## 2b · Mídia paga — diagnóstico e plano (18/08/2026)
+
+Dados lidos **direto da API da Meta**, não estimados. Achado central: o evento
+`Purchase` **não envia `content_ids` em nenhum dos 28 dias medidos** — a Meta vê
+o dinheiro entrar e não sabe de onde veio. Isso explica ROAS 0,12 com CPM 3×
+abaixo da referência e CTR 60% acima.
+
+Comece pelo [`midia-paga/README.md`](midia-paga/README.md).
 
 ## 3 · QA das imagens
 
