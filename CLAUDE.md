@@ -1,18 +1,22 @@
 # BVBA Supply® — contexto de trabalho
 
-Repositório da **BVBA Supply®**, marca brasileira de streetwear. Reúne quatro projetos:
-o **agente de drop da Nuvemshop** (código Python, em `agente_drop/`), o **planejamento de
-marketing** (documentação operacional), a **auditoria das imagens de e-commerce** e uma
-**pesquisa de mercado** independente. O índice de tudo está no [`README.md`](README.md).
+Repositório da **BVBA Supply®**, marca brasileira de streetwear. Reúne o **agente de drop
+da Nuvemshop** (código Python, em `agente_drop/`), o **planejamento de marketing**
+(documentação operacional), o **diagnóstico e plano de mídia paga** (`midia-paga/`), a
+**auditoria das imagens de e-commerce** e uma **pesquisa de mercado** independente.
+O índice de tudo está no [`README.md`](README.md).
 
-> ## 📍 O plano atual é [`PLANO.md`](PLANO.md)
+> ## 📍 O plano atual é [`PLANO.md`](PLANO.md) + [`midia-paga/`](midia-paga/)
 >
-> **A mídia paga está pausada por decisão do Victor e permanece pausada.** O plano v2 não tem
-> linha de orçamento de anúncio: cresce ativando os ~700 contatos mornos que a marca já tem
-> (218 no grupo VIP, ~500 na base, 6.290 no Instagram) antes de comprar tráfego novo.
+> **⚠️ 18/08/2026 — a mídia paga foi religada por decisão do Victor**, com teto de R$30/dia.
+> O plano de execução está em [`midia-paga/`](midia-paga/), construído sobre dados lidos
+> direto da API da Meta. O `PLANO.md` (crescimento sem mídia, ativando os ~700 contatos
+> mornos) **segue válido e continua sendo o motor principal** — a mídia amplifica, não
+> substitui. As 40 conversas 1-a-1 por semana continuam sendo a métrica operacional nº 1.
 >
 > Os documentos em [`plano-360/`](plano-360/) são material de apoio. A copy, os scripts de
-> WhatsApp e o checklist de medição seguem válidos; **a arquitetura de mídia paga não**.
+> WhatsApp e o checklist de medição seguem válidos; **a arquitetura de mídia paga de lá
+> continua obsoleta** — a vigente é a de [`midia-paga/`](midia-paga/).
 
 ---
 
@@ -24,7 +28,8 @@ Motivo concreto, já verificado: o ambiente remoto tem política de egresso "neg
 
 | | Sessão local (Mac) | Sessão remota (nuvem) |
 |---|---|---|
-| Nuvemshop, Meta Ads | ✅ | ❌ egresso 403 |
+| Meta Ads (Gerenciador) | ✅ | ✅ **via MCP** — autentica no servidor, contorna o egresso |
+| Nuvemshop | ✅ | ❌ egresso 403 |
 | Site bvbasupply.com.br | ✅ | ❌ egresso 403 |
 | Obsidian (cofre local) | ✅ | ❌ não existe no container |
 | Drive, Gmail, Calendar | ✅ | ✅ (via MCP, autentica no servidor) |
@@ -66,9 +71,28 @@ Confirmados em fonte oficial (Drive da marca, recibos da Meta, artifacts de plan
 
 Camiseta e boné custam o mesmo (R$129,90). **Ticket atual: R$132.**
 
-### O número que governa as decisões
+### Os números que governam as decisões
 
-O plano de lançamento de 02/08 registra que 8 pedidos seriam *"mais que o trimestre inteiro"* — a loja está em **~2 a 3 pedidos/mês**. Com R$900/mês de mídia, o **ROAS real é ~0,4**: a conta de anúncios consome caixa. Qualquer recomendação precisa partir daí.
+**Medidos na API da Meta em 18/08/2026** — substituem as inferências anteriores.
+
+| | Registrado antes | **Medido** |
+|---|---|---|
+| Pedidos/mês | 2–3 (inferência) | **~7–8** (eventos de compra no pixel, 28 dias) |
+| ROAS | ~0,4 (estimativa) | **0,12** (90 dias, atribuição mista) |
+| CPM | — | **R$19,33** — 3× abaixo da referência de e-commerce |
+| CTR | — | **2,75%** — 60% acima da referência |
+| Custo por carrinho (melhor conjunto) | — | **R$3,85** |
+
+**A leitura muda de lugar.** A conta compra atenção mais barata que o mercado e converte
+visita em carrinho numa taxa saudável (9,9%). O que quebra é a medição: o evento `Purchase`
+**não envia `content_ids` em nenhum dos 28 dias medidos**, e o `InitiateCheckout` dispara 5
+vezes contra 8 compras. A Meta não consegue atribuir o que a loja vende.
+
+Diagnóstico completo em [`midia-paga/01-diagnostico.md`](midia-paga/01-diagnostico.md).
+
+**A alavanca de decisão:** com ticket de R$132, R$30/dia exigem 12,4 pedidos/mês só para
+empatar no lucro bruto. Com o combo de 2 peças a R$219, exigem 7,5. Mover o ticket corta a
+meta pela metade e é grátis.
 
 ### Coleções
 
@@ -98,10 +122,10 @@ O `README.md` da pasta traz o índice completo dos oito documentos.
 ## Próximos passos em aberto
 
 1. **Exportar os pedidos da Nuvemshop** (últimos 12 meses, CSV). Resolve de uma vez AOV, ticket, mix e recompra — hoje inferidos. É o item de maior impacto.
-2. **Exportar o relatório da Meta** (90 dias, por campanha/conjunto/anúncio, com gasto, compras e valor de conversão). Dá o ROAS real.
+2. ~~**Exportar o relatório da Meta**~~ ✅ **feito em 18/08/2026** via MCP — ver [`midia-paga/01-diagnostico.md`](midia-paga/01-diagnostico.md).
 3. **Ler o resultado da janela VIP de 10–13/08**, que acabou de rodar.
-4. **Decidir sobre a mídia paga:** manter R$30/dia ou pausar 60 dias e redirecionar para estoque de brinde e conteúdo. A aritmética favorece pausar.
-5. **Validar CAPI e EMQ ≥ 7** na Nuvemshop — bloqueante para qualquer mídia.
+4. ~~**Decidir sobre a mídia paga**~~ ✅ **decidido em 18/08/2026: religar com teto de R$30/dia.** Plano em [`midia-paga/`](midia-paga/). Repor estoque de brinde continua sendo pré-requisito — é ele que sustenta o ticket de R$219 que faz o orçamento caber.
+5. **Validar CAPI e EMQ ≥ 7** na Nuvemshop — bloqueante para qualquer mídia. ⚠️ **Medido: CAPI ativa ✅, EMQ 6,1 ❌.** Faltam `em`, `ph` e `fbc`. Correção em [`midia-paga/02-correcoes-de-sinal.md`](midia-paga/02-correcoes-de-sinal.md).
 6. **Auditar as imagens do acervo Magnific** contra a regra nº 1 acima.
 
 ## Onde as coisas estão no Drive

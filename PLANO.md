@@ -8,6 +8,25 @@
 
 ---
 
+> ### ⚠️ Atualização de 18/08/2026 — a mídia foi religada
+>
+> Victor decidiu religar a mídia paga com teto de **R$30/dia**. O plano de execução está em
+> [`midia-paga/`](midia-paga/), construído sobre dados lidos direto da API da Meta.
+>
+> **O que muda neste documento:** só a seção 6 ("Quando a mídia volta"). Dois dos três
+> gatilhos viraram **pré-requisito executável** em vez de barreira de espera — EMQ ≥ 7 e
+> ticket ≥ R$200 são agora a Fase 0 e a decisão nº 1 do plano de mídia.
+>
+> **O que não muda:** tudo o mais. Os três motores, o ritmo semanal, as 40 conversas 1-a-1
+> por semana. **A mídia amplifica esse motor; não o substitui.** Se só uma coisa for feita,
+> que seja o motor 1.
+>
+> **Uma correção de número:** o volume de "2 a 3 pedidos/mês" era inferência. O pixel
+> registra **~7–8 compras em 28 dias**. A meta de 15 pedidos/mês está a **2× de distância,
+> não a 6×** — as metas deste plano, como ele próprio previu, sobem.
+
+---
+
 ## 1. O diagnóstico, revisado
 
 A leitura anterior era *"o ticket é baixo demais para o orçamento de mídia"*. Com a mídia fora da conta, o problema aparece com mais nitidez — e é outro.
@@ -123,13 +142,23 @@ O número 1 é o único que você controla diretamente todo dia. Os outros quatr
 
 ## 6. Quando a mídia volta
 
+> **Superado em 18/08/2026.** A mídia foi religada. Esta seção fica como registro do
+> raciocínio original — e porque os três gatilhos continuam sendo a régua certa, agora
+> transformados em pré-requisito de execução. Ver [`midia-paga/03-plano-de-midia.md`](midia-paga/03-plano-de-midia.md).
+
 Não por data — por gatilho. **Três condições, todas ao mesmo tempo:**
 
-1. **15+ pedidos/mês** vindos de canal próprio, por dois meses seguidos
-2. **EMQ ≥ 7** com CAPI ativa e deduplicada *(em execução agora — única alteração autorizada)*
-3. **Ticket médio ≥ R$200**
+| # | Condição | Situação medida em 18/08 | Tratamento no plano de mídia |
+|---|---|---|---|
+| 1 | **15+ pedidos/mês** por canal próprio, 2 meses | ~7–8/mês | não atingido — distância de 2×, não 6× |
+| 2 | **EMQ ≥ 7** com CAPI ativa e deduplicada | CAPI ✅ · **EMQ 6,1** ❌ | **virou a Fase 0 — bloqueante absoluto** |
+| 3 | **Ticket médio ≥ R$200** | R$132 | **virou a decisão nº 1 — bloqueante** |
 
 Com as três, R$30/dia deixa de comprar ruído e passa a amplificar algo que já funciona. Sem as três, mídia é imposto sobre a esperança.
+
+**A diferença de agora:** as condições 2 e 3 não são espera, são trabalho de uma semana. A 2
+se resolve no Gerenciador de Eventos; a 3 se resolve trocando a régua do brinde para tamanho
+de carrinho — o que este plano já recomendava no Motor 2, a custo zero.
 
 Enquanto isso, os ~R$900/mês que não vão para anúncio têm destino melhor: **repor o estoque de brinde** — hoje são 9 bonés para uma escada que promete brinde a sete pessoas — e produzir conteúdo. Estoque de brinde é o que limita o motor 2; anúncio não limita nada hoje.
 
